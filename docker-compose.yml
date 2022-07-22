@@ -1,0 +1,7 @@
+version: "3"
+services:
+  hm-brillekalkulator:
+    build: .
+    image: "hm-brillekalkulator"
+    ports:
+      - "5000:5000"
