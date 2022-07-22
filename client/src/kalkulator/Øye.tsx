@@ -1,17 +1,22 @@
 import { Heading, Select } from '@navikt/ds-react'
-import { Controller, useFormContext } from 'react-hook-form'
+import { Controller } from 'react-hook-form'
 import styled from 'styled-components'
 import { capitalize } from '../common/stringFormatting'
-import type { BrillestyrkeFormData } from './BrillestyrkeForm'
 import { MAX_SFÆRE, MAX_STYRKE, MAX_SYLINDER, MIN_STYRKE } from './config'
 import { FormatertStyrke } from './FormatertStyrke'
 
-export function Øye(props: { type: 'venstre' | 'høyre' }) {
-  const { type } = props
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext<{ brillestyrke: BrillestyrkeFormData }>()
+export interface ØyeProps {
+  control: any
+  errors: any
+  type: 'venstre' | 'høyre'
+}
+
+export function Øye(props: ØyeProps) {
+  const { control, errors, type } = props
+
+  const sfæreName = `${type}Sfære`
+  const sylinderName = `${type}Sylinder`
+
   return (
     <Grid>
       <ØyeEtikett>
@@ -20,13 +25,13 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
         </Heading>
       </ØyeEtikett>
       <Controller
-        name={`brillestyrke.${type}Sfære`}
+        name={sfæreName}
         control={control}
         rules={{
           required: 'Du må oppgi en verdi',
         }}
         render={({ field }) => (
-          <Select label="Sfære (SPH)" size="medium" error={errors.brillestyrke?.[`${type}Sfære`]?.message} {...field}>
+          <Select label="Sfære (SPH)" size="medium" error={errors[sfæreName]?.message} {...field}>
             <option value="">Velg sfære</option>
             {range(1, MAX_SFÆRE).map((it) => (
               <option key={it} value={it}>
@@ -37,18 +42,13 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
         )}
       />
       <Controller
-        name={`brillestyrke.${type}Sylinder`}
+        name={sylinderName}
         control={control}
         rules={{
           required: 'Du må oppgi en verdi',
         }}
         render={({ field }) => (
-          <Select
-            label="Sylinder (CYL)"
-            size="medium"
-            error={errors.brillestyrke?.[`${type}Sylinder`]?.message}
-            {...field}
-          >
+          <Select label="Sylinder (CYL)" size="medium" error={errors[sylinderName]?.message} {...field}>
             <option value="">Velg sylinder</option>
             {range(1, MAX_SYLINDER).map((it) => (
               <option key={it} value={it}>

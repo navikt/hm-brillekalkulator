@@ -24,28 +24,6 @@ export interface BeregnSatsResponse {
   satsBeløp: number
 }
 
-export interface Vilkårsgrunnlag {
-  orgnr: string
-  fnrBarn: string
-  brilleseddel: Brilleseddel
-  bestillingsdato: string
-  brillepris: string
-}
-
-export interface Vilkårsvurdering {
-  resultat: VilkårsgrunnlagResultat
-  sats: SatsType
-  satsBeskrivelse: string
-  satsBeløp: number
-  beløp: string
-}
-
-export enum VilkårsgrunnlagResultat {
-  JA = 'JA',
-  NEI = 'NEI',
-  KANSKJE = 'KANSKJE',
-}
-
 export enum SatsType {
   SATS_1 = 'SATS_1',
   SATS_2 = 'SATS_2',

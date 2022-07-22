@@ -1,5 +1,4 @@
-import { Heading, Panel } from '@navikt/ds-react'
-import { Avstand } from '../components/Avstand'
+import { Heading, Link, Panel } from '@navikt/ds-react'
 import { Banner } from '../components/Banner'
 import ScrollToTop from '../components/ScrollToTop'
 import { KalkulatorForm } from './KalkulatorForm'
@@ -17,14 +16,10 @@ export function Kalkulator() {
       <main>
         <ScrollToTop />
         <Panel>
-          <Heading level="2" size="medium" spacing>
-            Om barnet
-          </Heading>
-          <Avstand marginTop={5} marginBottom={5}>
-            <Avstand marginTop={5}>
-              <KalkulatorForm />
-            </Avstand>
-          </Avstand>
+          <KalkulatorForm />
+        </Panel>
+        <Panel>
+          <Link href="https://www.nav.no/briller-til-barn">Mer informasjon om ordningen</Link>
         </Panel>
       </main>
     </>
