@@ -1,4 +1,4 @@
-import { Alert, BodyLong, Button, Heading, Radio, RadioGroup, Select } from '@navikt/ds-react'
+import { Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup, Select } from '@navikt/ds-react'
 import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import styled from 'styled-components'
@@ -20,11 +20,10 @@ export function KalkulatorForm() {
   const {
     control,
     watch,
-    handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<KalkulatorFormData>({
     defaultValues: {
-      alder: '',
+      alder: '-1',
       vedtak: false,
       folketrygden: true,
       høyreSfære: '',
@@ -38,11 +37,7 @@ export function KalkulatorForm() {
 
   return (
     <>
-      <form
-        onSubmit={handleSubmit((data) => {
-          console.log(data)
-        })}
-      >
+      <form>
         <Heading level="2" size="medium" spacing>
           Om barnet
         </Heading>
@@ -51,7 +46,7 @@ export function KalkulatorForm() {
             control={control}
             name="alder"
             render={({ field }) => (
-              <Alder label="Barnets alder" {...field}>
+              <Alder label="Barnets alder" error={errors.alder?.message} {...field}>
                 <option value="-1">Velg alder</option>
                 {[...Array(19).keys()].map((alder) => (
                   <option key={alder} value={alder}>
@@ -93,28 +88,43 @@ export function KalkulatorForm() {
         </Avstand>
         {vilkårsvurdering && (
           <Avstand marginTop={5} marginBottom={5}>
-            <Alert variant={vilkårsvurdering.ok ? 'info' : 'warning'}>
+            <Vilkårsvurdering>
               <Heading level="2" spacing size="small">
                 {vilkårsvurdering.overskrift}
               </Heading>
-              {vilkårsvurdering.vilkår.map((v) => (
-                <BodyLong key={v}>{v}</BodyLong>
-              ))}
-            </Alert>
+              <Vilkår>
+                {vilkårsvurdering.vilkår.map(({ variant, beskrivelse }, index) => (
+                  <Alert key={index} variant={variant} inline>
+                    {beskrivelse}
+                  </Alert>
+                ))}
+              </Vilkår>
+              <Avstand marginTop={5} centered>
+                <Button as="a" variant="secondary" href="https://www.nav.no/briller-til-barn">
+                  Mer informasjon om ordningen
+                </Button>
+              </Avstand>
+            </Vilkårsvurdering>
           </Avstand>
         )}
-        <Button type="submit" loading={isSubmitting}>
-          Beregn
-        </Button>
       </form>
     </>
   )
 }
 
+const Vilkårsvurdering = styled(Panel)`
+  background-color: var(--navds-global-color-gray-50);
+`
+
 const Grid = styled.div`
   display: grid;
   gap: var(--navds-spacing-5);
   margin-bottom: var(--navds-spacing-5);
+`
+
+const Vilkår = styled.div`
+  display: grid;
+  gap: var(--navds-spacing-3);
 `
 
 const Alder = styled(Select)`

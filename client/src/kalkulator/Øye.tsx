@@ -27,9 +27,6 @@ export function Øye(props: ØyeProps) {
       <Controller
         name={sfæreName}
         control={control}
-        rules={{
-          required: 'Du må oppgi en verdi',
-        }}
         render={({ field }) => (
           <Select label="Sfære (SPH)" size="medium" error={errors[sfæreName]?.message} {...field}>
             <option value="">Velg sfære</option>
@@ -44,9 +41,6 @@ export function Øye(props: ØyeProps) {
       <Controller
         name={sylinderName}
         control={control}
-        rules={{
-          required: 'Du må oppgi en verdi',
-        }}
         render={({ field }) => (
           <Select label="Sylinder (CYL)" size="medium" error={errors[sylinderName]?.message} {...field}>
             <option value="">Velg sylinder</option>

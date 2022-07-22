@@ -1,11 +1,16 @@
+import type { AlertProps } from '@navikt/ds-react'
 import { useEffect } from 'react'
 import { BeregnSatsRequest, BeregnSatsResponse, SatsType } from '../types'
 import { usePost } from '../usePost'
 
+interface Vilkår {
+  variant: AlertProps['variant']
+  beskrivelse: string
+}
+
 export interface Vilkårsvurdering {
-  ok: boolean
   overskrift: string
-  vilkår: string[]
+  vilkår: Vilkår[]
 }
 
 export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined {
@@ -16,35 +21,49 @@ export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined 
   const folketrygden = watch('folketrygden')
 
   let ok = true
-  const vilkår: string[] = []
+  const vilkår: Vilkår[] = []
 
-  if (!sats) {
+  if (!sats || alder === -1) {
     return
   }
   if (alder < 0 || alder > 18) {
     ok = false
-    vilkår.push('Barnet må være under 18 år')
+    vilkår.push({
+      variant: 'warning',
+      beskrivelse: 'Barnet må være under 18 år',
+    })
   }
   if (vedtak) {
     ok = false
-    vilkår.push('Barnet kan kun få ett par briller per kalenderår')
+    vilkår.push({
+      variant: 'warning',
+      beskrivelse: 'Barnet kan kun få ett par briller per kalenderår',
+    })
   }
   if (!folketrygden) {
     ok = false
-    vilkår.push('Barnet må ha folkeregistrert adresse i Norge')
+    vilkår.push({
+      variant: 'warning',
+      beskrivelse: 'Barnet må ha folkeregistrert adresse i Norge',
+    })
   }
   if (sats.sats === SatsType.INGEN) {
     ok = false
-    vilkår.push('Vilkår om brillestyrke og/eller sylinderstyrke er ikke oppfylt')
+    vilkår.push({
+      variant: 'warning',
+      beskrivelse: 'Vilkår om brillestyrke og/eller sylinderstyrke er ikke oppfylt',
+    })
   }
 
   if (ok) {
-    vilkår.push(`Barnet kan få støtte fra sats ${sats.sats.replace('SATS_', '')}: ${sats.satsBeskrivelse}`)
+    vilkår.push({
+      variant: 'success',
+      beskrivelse: `Brillestyrken gir sats ${sats.sats.replace('SATS_', '')}, inntil ${sats.satsBeløp} kroner`,
+    })
   }
 
   return {
-    ok,
-    overskrift: ok ? `Brillestøtte på opp til ${sats.satsBeløp} kroner` : 'Vilkårene er ikke oppfylt',
+    overskrift: ok ? `Du kan ha rett til brillestøtte` : 'Vilkårene for brillestøtte er ikke oppfylt',
     vilkår,
   }
 }

@@ -1,4 +1,4 @@
-import { Heading, Link, Panel } from '@navikt/ds-react'
+import { Heading } from '@navikt/ds-react'
 import { Banner } from '../components/Banner'
 import ScrollToTop from '../components/ScrollToTop'
 import { KalkulatorForm } from './KalkulatorForm'
@@ -15,12 +15,7 @@ export function Kalkulator() {
       </header>
       <main>
         <ScrollToTop />
-        <Panel>
-          <KalkulatorForm />
-        </Panel>
-        <Panel>
-          <Link href="https://www.nav.no/briller-til-barn">Mer informasjon om ordningen</Link>
-        </Panel>
+        <KalkulatorForm />
       </main>
     </>
   )
