@@ -29,7 +29,7 @@ export function Øye(props: ØyeProps) {
         name={sfæreName}
         control={control}
         render={({ field }) => (
-          <Select label="Sfære (SPH)" size="medium" error={errors[sfæreName]?.message} {...field}>
+          <Select style={{maxWidth: '330px'}} label="Sfære (SPH)" size="medium" error={errors[sfæreName]?.message} {...field}>
             <option value="">Velg sfære</option>
             {range(1, MAX_SFÆRE).map((it) => (
               <option key={it} value={it}>
@@ -43,7 +43,7 @@ export function Øye(props: ØyeProps) {
         name={sylinderName}
         control={control}
         render={({ field }) => (
-          <Select label="Sylinder (CYL)" size="medium" error={errors[sylinderName]?.message} {...field}>
+          <Select style={{maxWidth: '330px'}} label="Sylinder (CYL)" size="medium" error={errors[sylinderName]?.message} {...field}>
             <option value="">Velg sylinder</option>
             {range(1, MAX_SYLINDER).map((it) => (
               <option key={it} value={it}>
