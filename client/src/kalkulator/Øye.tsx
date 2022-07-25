@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { capitalize } from '../common/stringFormatting'
 import { MAX_SFÆRE, MAX_STYRKE, MAX_SYLINDER, MIN_STYRKE } from './config'
 import { FormatertStyrke } from './FormatertStyrke'
+import {enhet} from "../enhet";
 
 export interface ØyeProps {
   control: any
@@ -68,6 +69,13 @@ const Grid = styled.div`
   padding-top: var(--navds-spacing-3);
   padding-bottom: var(--navds-spacing-3);
   align-items: start;
+  @media ${enhet.mobil} {
+    grid-template-columns: 100%;
+  }
+`
+
+const DropDownContainer = styled.div`
+ 
 `
 
 function range(start: number, stop: number, step: number = 0.25): number[] {
