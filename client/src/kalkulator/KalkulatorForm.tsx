@@ -7,7 +7,7 @@ import { useVilkårsvurdering } from './useVilkårsvurdering'
 import { Øye } from './Øye'
 
 export interface KalkulatorFormData {
-  alder: string
+  alder: boolean
   vedtak: boolean
   folketrygden: boolean
   høyreSfære: number | ''
@@ -23,7 +23,7 @@ export function KalkulatorForm() {
     formState: { errors },
   } = useForm<KalkulatorFormData>({
     defaultValues: {
-      alder: '-1',
+      alder: true,
       vedtak: false,
       folketrygden: true,
       høyreSfære: '',
@@ -43,19 +43,14 @@ export function KalkulatorForm() {
         </Heading>
         <Grid>
           <Controller
-            control={control}
-            name="alder"
-            render={({ field }) => (
-              <Alder label="Barnets alder" error={errors.alder?.message} {...field}>
-                <option value="-1">Velg alder</option>
-                {[...Array(19).keys()].map((alder) => (
-                  <option key={alder} value={alder}>
-                    {alder}
-                  </option>
-                ))}
-                <option value={99}>Over 18</option>
-              </Alder>
-            )}
+              control={control}
+              name="alder"
+              render={({ field }) => (
+                  <RadioGroup legend="Er barnet under 18 år?" {...field}>
+                    <Radio value={false}>Nei</Radio>
+                    <Radio value={true}>Ja</Radio>
+                  </RadioGroup>
+              )}
           />
           <Controller
             control={control}

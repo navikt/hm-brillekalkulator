@@ -18,17 +18,17 @@ export interface Vilkårsvurdering {
 export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering | undefined {
   const beregning = useBeregning(watch)
 
-  const alder = Number(watch('alder'))
+  const alder = watch('alder')
   const vedtak = watch('vedtak')
   const folketrygden = watch('folketrygden')
 
   let ok = true
   const vilkår: Vilkår[] = []
 
-  if (!beregning || alder === -1) {
+  if (!beregning) {
     return
   }
-  if (alder < 0 || alder > 18) {
+  if (!alder) {
     ok = false
     vilkår.push({
       variant: 'warning',
