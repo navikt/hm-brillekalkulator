@@ -74,10 +74,6 @@ const Grid = styled.div`
   }
 `
 
-const DropDownContainer = styled.div`
- 
-`
-
 function range(start: number, stop: number, step: number = 0.25): number[] {
   const size = (stop - start) * 4 + 1
   const padding = 1 / step
