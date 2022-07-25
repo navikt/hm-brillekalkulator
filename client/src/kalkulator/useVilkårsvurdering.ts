@@ -1,7 +1,9 @@
 import type { AlertProps } from '@navikt/ds-react'
 import { useEffect } from 'react'
+import type { UseFormWatch } from 'react-hook-form'
 import { BeregnSatsRequest, BeregnSatsResponse, SatsType } from '../types'
 import { usePost } from '../usePost'
+import type { KalkulatorFormData } from './KalkulatorForm'
 
 interface Vilkår {
   variant: AlertProps['variant']
@@ -13,8 +15,8 @@ export interface Vilkårsvurdering {
   vilkår: Vilkår[]
 }
 
-export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined {
-  const sats = useSats(watch)
+export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering | undefined {
+  const beregning = useBeregning(watch)
 
   const alder = Number(watch('alder'))
   const vedtak = watch('vedtak')
@@ -23,7 +25,7 @@ export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined 
   let ok = true
   const vilkår: Vilkår[] = []
 
-  if (!sats || alder === -1) {
+  if (!beregning || alder === -1) {
     return
   }
   if (alder < 0 || alder > 18) {
@@ -47,7 +49,7 @@ export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined 
       beskrivelse: 'Barnet må ha folkeregistrert adresse i Norge',
     })
   }
-  if (sats.sats === SatsType.INGEN) {
+  if (beregning.sats === SatsType.INGEN) {
     ok = false
     vilkår.push({
       variant: 'warning',
@@ -58,7 +60,9 @@ export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined 
   if (ok) {
     vilkår.push({
       variant: 'success',
-      beskrivelse: `Brillestyrken gir sats ${sats.sats.replace('SATS_', '')}, inntil ${sats.satsBeløp} kroner`,
+      beskrivelse: `Brillestyrken gir sats ${beregning.sats.replace('SATS_', '')}, inntil ${
+        beregning.satsBeløp
+      } kroner`,
     })
   }
 
@@ -68,7 +72,7 @@ export function useVilkårsvurdering(watch: any): Vilkårsvurdering | undefined 
   }
 }
 
-function useSats(watch: any) {
+function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
   const høyreSfære = watch('høyreSfære')
   const høyreSylinder = watch('høyreSylinder')
   const venstreSfære = watch('venstreSfære')
