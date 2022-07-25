@@ -87,9 +87,7 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
         høyreSylinder,
         venstreSfære,
         venstreSylinder,
-      }).catch(() => {
-        reset()
-      })
+      }).catch(() => reset())
     } else if (data) {
       reset()
     }
