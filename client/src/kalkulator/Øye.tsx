@@ -33,7 +33,7 @@ export function Øye(props: ØyeProps) {
             <option value="">Velg sfære</option>
             {range(1, MAX_SFÆRE).map((it) => (
               <option key={it} value={it}>
-                <FormatertStyrke verdi={it} max={MAX_SFÆRE} />
+                <FormatertStyrke verdi={it} type="sfære" />
               </option>
             ))}
           </Select>
@@ -47,7 +47,7 @@ export function Øye(props: ØyeProps) {
             <option value="">Velg sylinder</option>
             {range(1, MAX_SYLINDER).map((it) => (
               <option key={it} value={it}>
-                <FormatertStyrke verdi={-it} max={MAX_SYLINDER} minus />
+                <FormatertStyrke verdi={it} type="sylinder" />
               </option>
             ))}
           </Select>
