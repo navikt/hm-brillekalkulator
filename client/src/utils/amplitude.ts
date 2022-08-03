@@ -61,8 +61,8 @@ let kalkulatorVist = false // Vil kun logge 1 gang per sidevisning
 export function logKalkulatorVist() {
     if (!kalkulatorVist) {
         logCustomEvent(digihot_customevents.VISNING_KALKULATOR)
+        kalkulatorVist = true
     }
-    kalkulatorVist = true
 }
 
 let vilkårsvurderingVist = false // Vil kun logge 1 gang per sidevisning
@@ -70,6 +70,6 @@ let vilkårsvurderingVist = false // Vil kun logge 1 gang per sidevisning
 export function logVilkårsvurderingVist() {
     if (!vilkårsvurderingVist) {
         logCustomEvent(digihot_customevents.VISNING_VILKÅRSVURDERING)
+        vilkårsvurderingVist = true
     }
-    vilkårsvurderingVist = true
 }
