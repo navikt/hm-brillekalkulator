@@ -3,6 +3,7 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Avstand } from '../components/Avstand'
+import { digihot_customevents, logCustomEvent, logKalkulatorVist, logVilkårsvurderingVist } from '../utils/amplitude'
 import { useVilkårsvurdering } from './useVilkårsvurdering'
 import { Øye } from './Øye'
 
@@ -17,6 +18,8 @@ export interface KalkulatorFormData {
 }
 
 export function KalkulatorForm() {
+  logKalkulatorVist()
+
   const {
     control,
     watch,
@@ -34,6 +37,10 @@ export function KalkulatorForm() {
   })
 
   const vilkårsvurdering = useVilkårsvurdering(watch)
+
+  if (vilkårsvurdering) {
+    logVilkårsvurderingVist()
+  }
 
   return (
     <>
@@ -95,7 +102,9 @@ export function KalkulatorForm() {
                 ))}
               </Vilkår>
               <Avstand marginTop={5} centered>
-                <Button as="a" variant="secondary" href="https://www.nav.no/briller-til-barn">
+                <Button as="a" variant="secondary" href="https://www.nav.no/briller-til-barn"
+                  onClick={() => logCustomEvent(digihot_customevents.KLIKK_MER_INFORMASJON_OM_ORDNINGEN)}
+                >
                   Mer informasjon om ordningen
                 </Button>
               </Avstand>

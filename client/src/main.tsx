@@ -7,6 +7,7 @@ import { App } from './App'
 import { GlobalStyle } from './GlobalStyle'
 import { baseUrl } from './http'
 import { initMSW } from './mocks/initMSW'
+import { initAmplitude } from './utils/amplitude'
 
 initMSW().then(() => {
   const container = document.getElementById('root')!
@@ -22,3 +23,5 @@ initMSW().then(() => {
     </React.StrictMode>
   )
 })
+
+initAmplitude()
