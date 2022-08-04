@@ -146,12 +146,14 @@ export function KalkulatorForm() {
                   Mer informasjon om brillestøtte til barn
                 </Button>
               </Avstand>
-              <Avstand marginTop={5}>
-                Selv om du ikke har rett på støtte gjennom brilleordningen for barn, kan det være du har rett på{' '}
-                <a href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn">
-                  støtte gjennom andre ordninger.
-                </a>
-              </Avstand>
+              {!vilkårsvurdering.ok && (
+                <Avstand marginTop={5}>
+                  Selv om du ikke har rett på støtte gjennom brilleordningen for barn, kan det være du har rett på{' '}
+                  <a href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn">
+                    støtte gjennom andre ordninger.
+                  </a>
+                </Avstand>
+              )}
             </Vilkårsvurdering>
           </Avstand>
         )}

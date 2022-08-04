@@ -1,6 +1,7 @@
 import type { AlertProps } from '@navikt/ds-react'
 import React, { useEffect, ReactNode } from 'react'
 import type { UseFormWatch } from 'react-hook-form'
+import { Avstand } from '../components/Avstand'
 import { BeregnSatsRequest, BeregnSatsResponse, SatsType } from '../types'
 import { usePost } from '../usePost'
 import type { KalkulatorFormData } from './KalkulatorForm'
@@ -13,6 +14,7 @@ interface Vilkår {
 export interface Vilkårsvurdering {
   overskrift: string
   vilkår: Vilkår[]
+  ok: boolean
 }
 
 export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering | undefined {
@@ -69,15 +71,24 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   if (ok) {
     vilkår.push({
       variant: 'success',
-      beskrivelse: `Brillestyrken gir sats ${beregning.sats.replace('SATS_', '')}, inntil ${
-        beregning.satsBeløp
-      } kroner`,
+      beskrivelse: (
+        <>
+          <Avstand>
+            Barnet kan få inntil ${beregning.satsBeløp} kroner i støtte (${beregning.sats.replace('SATS_', 'sats ')}).
+          </Avstand>
+          <Avstand marginTop={4}>
+            Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn
+            satsen, må du betale resten selv.
+          </Avstand>
+        </>
+      ),
     })
   }
 
   return {
-    overskrift: ok ? `Du kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
+    overskrift: ok ? `Barnet kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
     vilkår,
+    ok,
   }
 }
 
