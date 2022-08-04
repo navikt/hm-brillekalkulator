@@ -74,7 +74,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
       beskrivelse: (
         <>
           <Avstand>
-            Barnet kan få inntil ${beregning.satsBeløp} kroner i støtte (${beregning.sats.replace('SATS_', 'sats ')}).
+            Barnet kan få inntil {beregning.satsBeløp} kroner i støtte ({beregning.sats.replace('SATS_', 'sats ')}).
           </Avstand>
           <Avstand marginTop={4}>
             Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn
