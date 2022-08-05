@@ -1,18 +1,20 @@
 import type { AlertProps } from '@navikt/ds-react'
-import { useEffect } from 'react'
+import React, { useEffect, ReactNode } from 'react'
 import type { UseFormWatch } from 'react-hook-form'
+import { Avstand } from '../components/Avstand'
 import { BeregnSatsRequest, BeregnSatsResponse, SatsType } from '../types'
 import { usePost } from '../usePost'
 import type { KalkulatorFormData } from './KalkulatorForm'
 
 interface Vilkår {
   variant: AlertProps['variant']
-  beskrivelse: string
+  beskrivelse: ReactNode
 }
 
 export interface Vilkårsvurdering {
   overskrift: string
   vilkår: Vilkår[]
+  ok: boolean
 }
 
 export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering | undefined {
@@ -32,21 +34,30 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse: 'Barnet må være under 18 år',
+      beskrivelse: 'Personer over 18 år kan ikke få støtte til barnebriller.',
     })
   }
   if (vedtak) {
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse: 'Barnet kan kun få ett par briller per kalenderår',
+      beskrivelse:
+        'Barnet har allerede fått støtte til barnebriller i år. Du kan bare få støtte én gang i året gjennom denne ordningen.',
     })
   }
   if (!folketrygden) {
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse: 'Barnet må ha folkeregistrert adresse i Norge',
+      beskrivelse: (
+        <>
+          Barnet har ikke folkeregistrert adresse i Norge. Det betyr vanligvis at barnet ikke er medlem av folketrygden
+          og derfor ikke har rett på støtte. Du kan lese mer om{' '}
+          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden">
+            medlemskap i folketrygden her.
+          </a>
+        </>
+      ),
     })
   }
   if (beregning.sats === SatsType.INGEN) {
@@ -60,15 +71,24 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   if (ok) {
     vilkår.push({
       variant: 'success',
-      beskrivelse: `Brillestyrken gir sats ${beregning.sats.replace('SATS_', '')}, inntil ${
-        beregning.satsBeløp
-      } kroner`,
+      beskrivelse: (
+        <>
+          <Avstand>
+            Barnet kan få inntil {beregning.satsBeløp} kroner i støtte ({beregning.sats.replace('SATS_', 'sats ')}).
+          </Avstand>
+          <Avstand marginTop={4}>
+            Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn
+            satsen, må du betale resten selv.
+          </Avstand>
+        </>
+      ),
     })
   }
 
   return {
-    overskrift: ok ? `Du kan ha rett til brillestøtte` : 'Vilkårene for brillestøtte er ikke oppfylt',
+    overskrift: ok ? `Barnet kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
     vilkår,
+    ok,
   }
 }
 
