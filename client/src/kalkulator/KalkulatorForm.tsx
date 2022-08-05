@@ -70,7 +70,8 @@ export function KalkulatorForm() {
               control={control}
               name="vedtak"
               render={({ field }) => (
-                <RadioGroup legend="Har barnet mottatt brillestøtte i dette kalenderåret?" {...field}>
+                <RadioGroup legend="Har barnet fått brillestøtte tidligere i år? " {...field}>
+                  <BodyLong>Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)</BodyLong>
                   <Radio value={false}>Nei</Radio>
                   <Radio value={true}>Ja</Radio>
                 </RadioGroup>
@@ -119,7 +120,7 @@ export function KalkulatorForm() {
           Brillestyrke
         </Heading>
         <Avstand>
-          <BodyLong>Du trenger bare å legge inn sfære og sylinder for å se hvilken støttesats barnet kan få.</BodyLong>
+          <BodyLong>Denne informasjonen finner du på brilleseddelen fra optiker.</BodyLong>
           <Øye control={control} errors={errors} type="høyre" />
           <Øye control={control} errors={errors} type="venstre" />
         </Avstand>
