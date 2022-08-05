@@ -70,8 +70,11 @@ export function KalkulatorForm() {
               control={control}
               name="vedtak"
               render={({ field }) => (
-                <RadioGroup legend="Har barnet fått brillestøtte tidligere i år? " {...field}>
-                  <BodyLong>Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)</BodyLong>
+                <RadioGroup
+                  legend="Har barnet fått brillestøtte tidligere i år?"
+                  description="Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)"
+                  {...field}
+                >
                   <Radio value={false}>Nei</Radio>
                   <Radio value={true}>Ja</Radio>
                 </RadioGroup>
