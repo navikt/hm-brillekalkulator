@@ -56,8 +56,8 @@ export function KalkulatorForm() {
               name="alder"
               render={({ field }) => (
                 <RadioGroup legend="Er barnet under 18 år?" {...field}>
-                  <Radio value={false}>Nei</Radio>
                   <Radio value={true}>Ja</Radio>
+                  <Radio value={false}>Nei, personen er over 18 år</Radio>
                 </RadioGroup>
               )}
             />
@@ -75,8 +75,8 @@ export function KalkulatorForm() {
                   description="Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)"
                   {...field}
                 >
-                  <Radio value={false}>Nei</Radio>
                   <Radio value={true}>Ja</Radio>
+                  <Radio value={false}>Nei</Radio>
                 </RadioGroup>
               )}
             />
@@ -100,8 +100,8 @@ export function KalkulatorForm() {
               name="folketrygden"
               render={({ field }) => (
                 <RadioGroup legend="Har barnet folkeregistrert adresse i Norge?" {...field}>
-                  <Radio value={false}>Nei</Radio>
                   <Radio value={true}>Ja</Radio>
+                  <Radio value={false}>Nei</Radio>
                 </RadioGroup>
               )}
             />
