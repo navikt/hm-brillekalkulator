@@ -104,14 +104,7 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
   const { post, data, reset } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/brillesedler')
 
   useEffect(() => {
-    if (
-      alder === null ||
-      alder === false ||
-      vedtak === null ||
-      vedtak === true ||
-      folketrygden === null ||
-      folketrygden === false
-    ) {
+    if (alder === null || vedtak === null || folketrygden === null) {
       return
     }
 
