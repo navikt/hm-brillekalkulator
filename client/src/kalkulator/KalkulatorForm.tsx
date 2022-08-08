@@ -1,5 +1,5 @@
-import { Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup, Select } from '@navikt/ds-react'
 import React from 'react'
+import { Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup, Select, Loader } from '@navikt/ds-react'
 import { Controller, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Avstand } from '../components/Avstand'
@@ -39,133 +39,141 @@ export function KalkulatorForm() {
 
   const vilkårsvurdering = useVilkårsvurdering(watch)
 
-  if (vilkårsvurdering) {
+  if (vilkårsvurdering.vurdering) {
     logVilkårsvurderingVist()
   }
 
   return (
-    <>
-      <form>
-        <Heading level="2" size="medium" spacing>
-          Om barnet
-        </Heading>
-        <Grid>
-          <div>
-            <Controller
-              control={control}
-              name="alder"
-              render={({ field }) => (
-                <RadioGroup legend="Er barnet under 18 år?" {...field}>
-                  <Radio value={true}>Ja</Radio>
-                  <Radio value={false}>Nei, personen er over 18 år</Radio>
-                </RadioGroup>
-              )}
-            />
-            {getValues('alder') === false && (
-              <Alert variant="info">Personer over 18 år kan ikke få støtte til barnebriller</Alert>
+    <form>
+      <Heading level="2" size="medium" spacing>
+        Om barnet
+      </Heading>
+      <Grid>
+        <div>
+          <Controller
+            control={control}
+            name="alder"
+            render={({ field }) => (
+              <RadioGroup legend="Er barnet under 18 år?" {...field}>
+                <Radio value={true}>Ja</Radio>
+                <Radio value={false}>Nei, personen er over 18 år</Radio>
+              </RadioGroup>
             )}
-          </div>
-          <div>
-            <Controller
-              control={control}
-              name="vedtak"
-              render={({ field }) => (
-                <RadioGroup
-                  legend="Har barnet fått brillestøtte tidligere i år?"
-                  description="Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)"
-                  {...field}
-                >
-                  <Radio value={true}>Ja</Radio>
-                  <Radio value={false}>Nei</Radio>
-                </RadioGroup>
-              )}
-            />
-            {getValues('vedtak') === true && (
-              <Alert variant="info">
-                Barnet kan bare få støtte én gang i året gjennom denne ordningen for barnebriller. Har du fått støtte
-                til briller eller linser gjennom noen av{' '}
-                <a
-                  href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                  target="_blank"
-                >
-                  de andre støtteordningene fra NAV
-                </a>
-                ? Da kan barnet likevel få støtte gjennom denne ordningen.
-              </Alert>
+          />
+          {getValues('alder') === false && (
+            <Alert variant="info">Personer over 18 år kan ikke få støtte til barnebriller</Alert>
+          )}
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="vedtak"
+            render={({ field }) => (
+              <RadioGroup
+                legend="Har barnet fått brillestøtte tidligere i år?"
+                description="Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)"
+                {...field}
+              >
+                <Radio value={true}>Ja</Radio>
+                <Radio value={false}>Nei</Radio>
+              </RadioGroup>
             )}
-          </div>
-          <div>
-            <Controller
-              control={control}
-              name="folketrygden"
-              render={({ field }) => (
-                <RadioGroup legend="Har barnet folkeregistrert adresse i Norge?" {...field}>
-                  <Radio value={true}>Ja</Radio>
-                  <Radio value={false}>Nei</Radio>
-                </RadioGroup>
-              )}
-            />
-            {getValues('folketrygden') === false && (
-              <Alert variant="info">
-                Hvis barnet ikke har folkeregistrert adresse i Norge, betyr det vanligvis at barnet ikke har rett på
-                støtte. For å få støtte må barnet være medlem av folketrygden. Du kan lese mer om{' '}
-                <a
-                  href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
-                  target="_blank"
-                >
-                  medlemskap i folketrygden her.
-                </a>
-              </Alert>
+          />
+          {getValues('vedtak') === true && (
+            <Alert variant="info">
+              Barnet kan bare få støtte én gang i året gjennom denne ordningen for barnebriller. Har du fått støtte til
+              briller eller linser gjennom noen av{' '}
+              <a
+                href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                target="_blank"
+              >
+                de andre støtteordningene fra NAV
+              </a>
+              ? Da kan barnet likevel få støtte gjennom denne ordningen.
+            </Alert>
+          )}
+        </div>
+        <div>
+          <Controller
+            control={control}
+            name="folketrygden"
+            render={({ field }) => (
+              <RadioGroup legend="Har barnet folkeregistrert adresse i Norge?" {...field}>
+                <Radio value={true}>Ja</Radio>
+                <Radio value={false}>Nei</Radio>
+              </RadioGroup>
             )}
-          </div>
-        </Grid>
-        <Heading level="2" size="medium" spacing>
-          Brillestyrke
-        </Heading>
-        <Avstand>
-          <BodyLong>Denne informasjonen finner du på brilleseddelen fra optiker.</BodyLong>
-          <Øye control={control} errors={errors} type="høyre" />
-          <Øye control={control} errors={errors} type="venstre" />
-        </Avstand>
-        {vilkårsvurdering && (
-          <Avstand marginTop={5} marginBottom={5}>
-            <Vilkårsvurdering>
-              <Heading level="2" spacing size="medium">
-                {vilkårsvurdering.overskrift}
-              </Heading>
-              <Vilkår>
-                {vilkårsvurdering.vilkår.map(({ variant, beskrivelse }, index) => (
-                  <Alert key={index} variant={variant} inline>
-                    {beskrivelse}
-                  </Alert>
-                ))}
-              </Vilkår>
-              <Avstand marginTop={5}>
-                <Button
-                  as="a"
-                  variant="secondary"
-                  href="https://www.nav.no/briller-til-barn"
-                  onClick={() => logCustomEvent(digihot_customevents.KLIKK_MER_INFORMASJON_OM_ORDNINGEN)}
-                >
-                  Mer informasjon om brillestøtte til barn
-                </Button>
-              </Avstand>
-              {!vilkårsvurdering.ok && (
+          />
+          {getValues('folketrygden') === false && (
+            <Alert variant="info">
+              Hvis barnet ikke har folkeregistrert adresse i Norge, betyr det vanligvis at barnet ikke har rett på
+              støtte. For å få støtte må barnet være medlem av folketrygden. Du kan lese mer om{' '}
+              <a
+                href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
+                target="_blank"
+              >
+                medlemskap i folketrygden her.
+              </a>
+            </Alert>
+          )}
+        </div>
+      </Grid>
+      <Heading level="2" size="medium" spacing>
+        Brillestyrke
+      </Heading>
+      <Avstand>
+        <BodyLong>Denne informasjonen finner du på brilleseddelen fra optiker.</BodyLong>
+        <Øye control={control} errors={errors} type="høyre" />
+        <Øye control={control} errors={errors} type="venstre" />
+      </Avstand>
+
+      <Avstand marginTop={5} marginBottom={5}>
+        {vilkårsvurdering.loading ? (
+          <Centered>
+            <Loader size="xlarge" />
+          </Centered>
+        ) : (
+          <>
+            {vilkårsvurdering.vurdering && (
+              <Vilkårsvurdering>
+                <Heading level="2" spacing size="medium">
+                  {vilkårsvurdering.vurdering.overskrift}
+                </Heading>
+                <Vilkår>
+                  {vilkårsvurdering.vurdering.vilkår.map(({ variant, beskrivelse }, index) => (
+                    <Alert key={index} variant={variant} inline>
+                      {beskrivelse}
+                    </Alert>
+                  ))}
+                </Vilkår>
                 <Avstand marginTop={5}>
-                  Selv om du ikke har rett på støtte gjennom brilleordningen for barn, kan det være du har rett på{' '}
-                  <a
-                    href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                  <Button
+                    as="a"
+                    variant="secondary"
+                    href="https://www.nav.no/briller-til-barn"
+                    onClick={() => logCustomEvent(digihot_customevents.KLIKK_MER_INFORMASJON_OM_ORDNINGEN)}
                     target="_blank"
                   >
-                    støtte gjennom andre ordninger.
-                  </a>
+                    Mer informasjon om brillestøtte til barn
+                  </Button>
                 </Avstand>
-              )}
-            </Vilkårsvurdering>
-          </Avstand>
+                {!vilkårsvurdering.vurdering.ok && (
+                  <Avstand marginTop={5}>
+                    Selv om du ikke har rett på støtte gjennom brilleordningen for barn, kan det være du har rett på{' '}
+                    <a
+                      href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                      target="_blank"
+                    >
+                      støtte gjennom andre ordninger.
+                    </a>
+                  </Avstand>
+                )}
+              </Vilkårsvurdering>
+            )}
+          </>
         )}
-      </form>
-    </>
+      </Avstand>
+    </form>
   )
 }
 
@@ -184,6 +192,6 @@ const Vilkår = styled.div`
   gap: var(--navds-spacing-3);
 `
 
-const Alder = styled(Select)`
-  max-width: 180px;
+const Centered = styled.div`
+  text-align: center;
 `

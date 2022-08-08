@@ -12,13 +12,16 @@ interface Vilkår {
 }
 
 export interface Vilkårsvurdering {
-  overskrift: string
-  vilkår: Vilkår[]
-  ok: boolean
+  loading: boolean | undefined
+  vurdering?: {
+    overskrift: string
+    vilkår: Vilkår[]
+    ok: boolean
+  }
 }
 
-export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering | undefined {
-  const beregning = useBeregning(watch)
+export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering {
+  const { beregning, loading } = useBeregning(watch)
 
   const alder = watch('alder')
   const vedtak = watch('vedtak')
@@ -28,8 +31,9 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   const vilkår: Vilkår[] = []
 
   if (!beregning) {
-    return
+    return { loading }
   }
+
   if (alder === false) {
     ok = false
     vilkår.push({
@@ -86,9 +90,12 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   }
 
   return {
-    overskrift: ok ? `Barnet kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
-    vilkår,
-    ok,
+    loading,
+    vurdering: {
+      overskrift: ok ? `Barnet kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
+      vilkår,
+      ok,
+    },
   }
 }
 
@@ -101,7 +108,7 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
   const venstreSfære = watch('venstreSfære')
   const venstreSylinder = watch('venstreSylinder')
 
-  const { post, data, reset } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/brillesedler')
+  const { post, data, reset, loading } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/brillesedler')
 
   useEffect(() => {
     if (alder === null || vedtak === null || folketrygden === null) {
@@ -120,5 +127,5 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
     }
   }, [høyreSfære, høyreSylinder, venstreSfære, venstreSylinder, alder, vedtak, folketrygden])
 
-  return data
+  return { beregning: data, loading }
 }
