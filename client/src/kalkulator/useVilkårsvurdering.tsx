@@ -30,14 +30,14 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   if (!beregning) {
     return
   }
-  if (!alder) {
+  if (alder === false) {
     ok = false
     vilkår.push({
       variant: 'warning',
       beskrivelse: 'Personer over 18 år kan ikke få støtte til barnebriller.',
     })
   }
-  if (vedtak) {
+  if (vedtak === true) {
     ok = false
     vilkår.push({
       variant: 'warning',
@@ -45,7 +45,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
         'Barnet har allerede fått støtte til barnebriller i år. Du kan bare få støtte én gang i året gjennom denne ordningen.',
     })
   }
-  if (!folketrygden) {
+  if (folketrygden === false) {
     ok = false
     vilkår.push({
       variant: 'warning',
@@ -93,6 +93,9 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
 }
 
 function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
+  const alder = watch('alder')
+  const vedtak = watch('vedtak')
+  const folketrygden = watch('folketrygden')
   const høyreSfære = watch('høyreSfære')
   const høyreSylinder = watch('høyreSylinder')
   const venstreSfære = watch('venstreSfære')
@@ -101,6 +104,17 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
   const { post, data, reset } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/brillesedler')
 
   useEffect(() => {
+    if (
+      alder === null ||
+      alder === false ||
+      vedtak === null ||
+      vedtak === true ||
+      folketrygden === null ||
+      folketrygden === false
+    ) {
+      return
+    }
+
     if (høyreSfære && høyreSylinder && venstreSfære && venstreSylinder) {
       post({
         høyreSfære,
@@ -111,7 +125,7 @@ function useBeregning(watch: UseFormWatch<KalkulatorFormData>) {
     } else if (data) {
       reset()
     }
-  }, [høyreSfære, høyreSylinder, venstreSfære, venstreSylinder])
+  }, [høyreSfære, høyreSylinder, venstreSfære, venstreSylinder, alder, vedtak, folketrygden])
 
   return data
 }

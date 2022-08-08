@@ -8,9 +8,9 @@ import { useVilkårsvurdering } from './useVilkårsvurdering'
 import { Øye } from './Øye'
 
 export interface KalkulatorFormData {
-  alder: boolean
-  vedtak: boolean
-  folketrygden: boolean
+  alder: boolean | null
+  vedtak: boolean | null
+  folketrygden: boolean | null
   høyreSfære: number | ''
   høyreSylinder: number | ''
   venstreSfære: number | ''
@@ -27,9 +27,9 @@ export function KalkulatorForm() {
     getValues,
   } = useForm<KalkulatorFormData>({
     defaultValues: {
-      alder: true,
-      vedtak: false,
-      folketrygden: true,
+      alder: null,
+      vedtak: null,
+      folketrygden: null,
       høyreSfære: '',
       høyreSylinder: '',
       venstreSfære: '',

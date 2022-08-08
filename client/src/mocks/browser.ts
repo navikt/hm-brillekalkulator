@@ -6,6 +6,7 @@ import { beregnSats } from './beregnSats'
 const handlers: RequestHandler[] = [
   rest.post<BeregnSatsRequest, {}, BeregnSatsResponse>(apiUrl('/brillesedler'), (req, res, ctx) => {
     return res(
+      ctx.delay(800),
       ctx.json(
         beregnSats({
           høyreSfære: req.body.høyreSfære,
