@@ -84,6 +84,9 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
             Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn
             satsen, må du betale resten selv.
           </Avstand>
+          <Avstand marginTop={4}>
+            Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut NAVs skjema for brillestøtte.
+          </Avstand>
         </>
       ),
     })
