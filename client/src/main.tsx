@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { GlobalStyle } from './GlobalStyle'
 import { baseUrl } from './http'
+import './i18n'
 import { initMSW } from './mocks/initMSW'
 import { initAmplitude } from './utils/amplitude'
 

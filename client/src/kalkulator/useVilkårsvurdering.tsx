@@ -1,6 +1,7 @@
 import type { AlertProps } from '@navikt/ds-react'
-import React, { useEffect, ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 import type { UseFormWatch } from 'react-hook-form'
+import { Trans, useTranslation } from 'react-i18next'
 import { Avstand } from '../components/Avstand'
 import { BeregnSatsRequest, BeregnSatsResponse, SatsType } from '../types'
 import { usePost } from '../usePost'
@@ -22,6 +23,7 @@ export interface Vilkårsvurdering {
 
 export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): Vilkårsvurdering {
   const { beregning, loading } = useBeregning(watch)
+  const { t } = useTranslation()
 
   const alder = watch('alder')
   const vedtak = watch('vedtak')
@@ -38,15 +40,14 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse: 'Personer over 18 år kan ikke få støtte til barnebriller.',
+      beskrivelse: t('kalkulator.vilkår_alder_ikke_oppfylt'),
     })
   }
   if (vedtak === true) {
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse:
-        'Barnet har allerede fått støtte til barnebriller i år. Du kan bare få støtte én gang i året gjennom denne ordningen.',
+      beskrivelse: t('kalkulator.vilkår_vedtak_ikke_oppfylt'),
     })
   }
   if (folketrygden === false) {
@@ -54,13 +55,11 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
     vilkår.push({
       variant: 'warning',
       beskrivelse: (
-        <>
-          Barnet har ikke folkeregistrert adresse i Norge. Det betyr vanligvis at barnet ikke er medlem av folketrygden
-          og derfor ikke har rett på støtte. Du kan lese mer om{' '}
-          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden">
-            medlemskap i folketrygden her.
-          </a>
-        </>
+        <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_ikke_oppfylt">
+          <></>
+          <a
+            href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
+        </Trans>
       ),
     })
   }
@@ -68,7 +67,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
     ok = false
     vilkår.push({
       variant: 'warning',
-      beskrivelse: 'Vilkår om brillestyrke og/eller sylinderstyrke er ikke oppfylt',
+      beskrivelse: t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'),
     })
   }
 
@@ -78,14 +77,15 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
       beskrivelse: (
         <>
           <Avstand>
-            Barnet kan få inntil {beregning.satsBeløp} kroner i støtte ({beregning.sats.replace('SATS_', 'sats ')}).
+            {t('kalkulator.informasjon_om_sats', {
+              sats: beregning.sats.replace('SATS_', 'sats '),
+              satsBeløp: beregning.satsBeløp,
+            })}
           </Avstand>
+          <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
           <Avstand marginTop={4}>
-            Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn
-            satsen, må du betale resten selv.
-          </Avstand>
-          <Avstand marginTop={4}>
-            Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut NAVs skjema for brillestøtte.
+            Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut
+            NAVs skjema for brillestøtte.
           </Avstand>
         </>
       ),
@@ -95,7 +95,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
   return {
     loading,
     vurdering: {
-      overskrift: ok ? `Barnet kan ha rett til brillestøtte` : 'Det ser ut som barnet ikke har rett til brillestøtte',
+      overskrift: t(ok ? 'kalkulator.vilkårsvurdering_ok' : 'kalkulator.vilkårsvurdering_ikke_ok'),
       vilkår,
       ok,
     },

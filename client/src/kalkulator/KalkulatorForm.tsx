@@ -1,6 +1,7 @@
+import { Alert, BodyLong, Button, Heading, Loader, Panel, Radio, RadioGroup } from '@navikt/ds-react'
 import React from 'react'
-import { Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup, Select, Loader } from '@navikt/ds-react'
 import { Controller, useForm } from 'react-hook-form'
+import { Trans, useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { Avstand } from '../components/Avstand'
 import { digihot_customevents, logCustomEvent, logKalkulatorVist, logVilkårsvurderingVist } from '../utils/amplitude'
@@ -18,6 +19,7 @@ export interface KalkulatorFormData {
 }
 
 export function KalkulatorForm() {
+  const { t } = useTranslation()
   logKalkulatorVist()
 
   const {
@@ -46,7 +48,7 @@ export function KalkulatorForm() {
   return (
     <form>
       <Heading level="2" size="medium" spacing>
-        Om barnet
+        {t('kalkulator.om_barnet')}
       </Heading>
       <Grid>
         <div>
@@ -54,15 +56,13 @@ export function KalkulatorForm() {
             control={control}
             name="alder"
             render={({ field }) => (
-              <RadioGroup legend="Er barnet under 18 år?" {...field}>
-                <Radio value={true}>Ja</Radio>
-                <Radio value={false}>Nei, personen er over 18 år</Radio>
+              <RadioGroup legend={t('kalkulator.ledetekst_vilkår_alder')} {...field}>
+                <Radio value={true}>{t('felles.ja')}</Radio>
+                <Radio value={false}>{t('kalkulator.nei_over_18_år')}</Radio>
               </RadioGroup>
             )}
           />
-          {getValues('alder') === false && (
-            <Alert variant="info">Personer over 18 år kan ikke få støtte til barnebriller</Alert>
-          )}
+          {getValues('alder') === false && <Alert variant="info">{t('kalkulator.vilkår_alder_nei')}</Alert>}
         </div>
         <div>
           <Controller
@@ -70,26 +70,25 @@ export function KalkulatorForm() {
             name="vedtak"
             render={({ field }) => (
               <RadioGroup
-                legend="Har barnet fått brillestøtte tidligere i år?"
-                description="Du kan få støtte én gang per kalenderår (mellom 1. januar og 31. desember)"
+                legend={t('kalkulator.ledetekst_vilkår_vedtak')}
+                description={t('kalkulator.vilkår_vedtak_forklaring')}
                 {...field}
               >
-                <Radio value={true}>Ja</Radio>
-                <Radio value={false}>Nei</Radio>
+                <Radio value={true}>{t('felles.ja')}</Radio>
+                <Radio value={false}>{t('felles.nei')}</Radio>
               </RadioGroup>
             )}
           />
           {getValues('vedtak') === true && (
             <Alert variant="info">
-              Barnet kan bare få støtte én gang i året gjennom denne ordningen for barnebriller. Har du fått støtte til
-              briller eller linser gjennom noen av{' '}
-              <a
-                href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                target="_blank"
-              >
-                de andre støtteordningene fra NAV
-              </a>
-              ? Da kan barnet likevel få støtte gjennom denne ordningen.
+              <Trans t={t} i18nKey="kalkulator.vilkår_vedtak_ja">
+                <></>
+                <a
+                  href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                  target="_blank"
+                />
+                <></>
+              </Trans>
             </Alert>
           )}
         </div>
@@ -98,31 +97,30 @@ export function KalkulatorForm() {
             control={control}
             name="folketrygden"
             render={({ field }) => (
-              <RadioGroup legend="Har barnet folkeregistrert adresse i Norge?" {...field}>
-                <Radio value={true}>Ja</Radio>
-                <Radio value={false}>Nei</Radio>
+              <RadioGroup legend={t('kalkulator.ledetekst_vilkår_folketrygden')} {...field}>
+                <Radio value={true}>{t('felles.ja')}</Radio>
+                <Radio value={false}>{t('felles.nei')}</Radio>
               </RadioGroup>
             )}
           />
           {getValues('folketrygden') === false && (
             <Alert variant="info">
-              Hvis barnet ikke har folkeregistrert adresse i Norge, betyr det vanligvis at barnet ikke har rett på
-              støtte. For å få støtte må barnet være medlem av folketrygden. Du kan lese mer om{' '}
-              <a
-                href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
-                target="_blank"
-              >
-                medlemskap i folketrygden her.
-              </a>
+              <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_nei">
+                <></>
+                <a
+                  href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
+                  target="_blank"
+                />
+              </Trans>
             </Alert>
           )}
         </div>
       </Grid>
       <Heading level="2" size="medium" spacing>
-        Brillestyrke
+        {t('kalkulator.brillestyrke')}
       </Heading>
       <Avstand>
-        <BodyLong>Denne informasjonen finner du på brilleseddelen fra optiker.</BodyLong>
+        <BodyLong>{t('kalkulator.informasjon_om_brilleseddel')}</BodyLong>
         <Øye control={control} errors={errors} type="høyre" />
         <Øye control={control} errors={errors} type="venstre" />
       </Avstand>
@@ -154,18 +152,18 @@ export function KalkulatorForm() {
                     onClick={() => logCustomEvent(digihot_customevents.KLIKK_MER_INFORMASJON_OM_ORDNINGEN)}
                     target="_blank"
                   >
-                    Mer informasjon om brillestøtte til barn
+                    {t('kalkulator.knapp_mer_informasjon')}
                   </Button>
                 </Avstand>
                 {!vilkårsvurdering.vurdering.ok && (
                   <Avstand marginTop={5}>
-                    Selv om du ikke har rett på støtte gjennom brilleordningen for barn, kan det være du har rett på{' '}
-                    <a
-                      href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                      target="_blank"
-                    >
-                      støtte gjennom andre ordninger.
-                    </a>
+                    <Trans t={t} i18nKey="kalkulator.vilkår_ikke_oppfylt">
+                      <></>
+                      <a
+                        href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                        target="_blank"
+                      />
+                    </Trans>
                   </Avstand>
                 )}
               </Vilkårsvurdering>

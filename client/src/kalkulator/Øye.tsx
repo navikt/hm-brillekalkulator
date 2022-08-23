@@ -1,10 +1,10 @@
 import { Heading, Select } from '@navikt/ds-react'
 import { Controller } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
-import { capitalize } from '../common/stringFormatting'
+import { enhet } from '../enhet'
 import { MAX_SFÆRE, MAX_STYRKE, MAX_SYLINDER, MIN_STYRKE } from './config'
 import { FormatertStyrke } from './FormatertStyrke'
-import {enhet} from "../enhet";
 
 export interface ØyeProps {
   control: any
@@ -14,6 +14,7 @@ export interface ØyeProps {
 
 export function Øye(props: ØyeProps) {
   const { control, errors, type } = props
+  const { t } = useTranslation()
 
   const sfæreName = `${type}Sfære`
   const sylinderName = `${type}Sylinder`
@@ -22,15 +23,21 @@ export function Øye(props: ØyeProps) {
     <Grid>
       <ØyeEtikett>
         <Heading level="3" size="small">
-          {`${capitalize(type)} øye`}
+          {t(`kalkulator.${type}_øye`)}
         </Heading>
       </ØyeEtikett>
       <Controller
         name={sfæreName}
         control={control}
         render={({ field }) => (
-          <Select style={{maxWidth: '330px'}} label="Sfære (SPH)" size="medium" error={errors[sfæreName]?.message} {...field}>
-            <option value="">Velg sfære</option>
+          <Select
+            style={{ maxWidth: '330px' }}
+            label={t('kalkulator.ledetekst_sfære')}
+            size="medium"
+            error={errors[sfæreName]?.message}
+            {...field}
+          >
+            <option value="">{t('kalkulator.velg_sfære')}</option>
             {range(1, MAX_SFÆRE).map((it) => (
               <option key={it} value={it}>
                 <FormatertStyrke verdi={it} type="sfære" />
@@ -43,8 +50,14 @@ export function Øye(props: ØyeProps) {
         name={sylinderName}
         control={control}
         render={({ field }) => (
-          <Select style={{maxWidth: '330px'}} label="Sylinder (CYL)" size="medium" error={errors[sylinderName]?.message} {...field}>
-            <option value="">Velg sylinder</option>
+          <Select
+            style={{ maxWidth: '330px' }}
+            label={t('kalkulator.ledetekst_sylinder')}
+            size="medium"
+            error={errors[sylinderName]?.message}
+            {...field}
+          >
+            <option value="">{t('kalkulator.velg_sylinder')}</option>
             {range(1, MAX_SYLINDER).map((it) => (
               <option key={it} value={it}>
                 <FormatertStyrke verdi={it} type="sylinder" />

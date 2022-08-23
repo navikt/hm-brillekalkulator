@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
 // Scroll to top every time user changes page
-const ScrollToTop = () => {
+export function ScrollToTop() {
   const pathname = useLocation()
 
   useEffect(() => {
@@ -11,5 +11,3 @@ const ScrollToTop = () => {
 
   return null
 }
-
-export default ScrollToTop
