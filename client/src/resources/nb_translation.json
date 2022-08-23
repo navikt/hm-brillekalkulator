@@ -38,5 +38,6 @@
   "kalkulator.vilkårsvurdering_ok": "Barnet kan ha rett til brillestøtte",
   "kalkulator.vilkårsvurdering_ikke_ok": "Det ser ut som barnet ikke har rett til brillestøtte",
   "kalkulator.informasjon_om_sats": "Barnet kan få inntil {{satsBeløp}} kroner i støtte ({{sats}}).",
-  "kalkulator.informasjon_om_brillepris": "Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn satsen, må du betale resten selv."
+  "kalkulator.informasjon_om_brillepris": "Hvis brillene koster mindre enn satsen, får du dekket det brillene koster. Hvis brillene koster mer enn satsen, må du betale resten selv.",
+  "kalkulator.informasjon_om_veiledende_svar": "Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut NAVs skjema for brillestøtte."
 }

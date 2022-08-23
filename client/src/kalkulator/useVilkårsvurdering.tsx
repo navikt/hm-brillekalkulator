@@ -57,8 +57,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
       beskrivelse: (
         <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_ikke_oppfylt">
           <></>
-          <a
-            href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
+          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
         </Trans>
       ),
     })
@@ -83,10 +82,7 @@ export function useVilkårsvurdering(watch: UseFormWatch<KalkulatorFormData>): V
             })}
           </Avstand>
           <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
-          <Avstand marginTop={4}>
-            Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut
-            NAVs skjema for brillestøtte.
-          </Avstand>
+          <Avstand marginTop={4}>{t('kalkulator.informasjon_om_veiledende_svar')}</Avstand>
         </>
       ),
     })

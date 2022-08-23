@@ -1,16 +1,17 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
-import resources from './resources.json'
+import nb from './resources/nb_translation.json'
+import nn from './resources/nb_translation.json'
 
 // noinspection JSIgnoredPromiseFromCall
 i18n.use(initReactI18next).init({
   debug: process.env.NODE_ENV === 'development',
   resources: {
     nb: {
-      translation: resources,
+      translation: nb,
     },
     nn: {
-      translation: resources,
+      translation: nn,
     },
   },
   lng: 'nb',
