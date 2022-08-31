@@ -9,7 +9,7 @@ on:
     branches:
       - main
       - design-tweaks
-      - hotjar
+      - nynorsk
 
 env:
   IMAGE: 'ghcr.io/navikt/hm-brillekalkulator:${{ github.sha }}'
