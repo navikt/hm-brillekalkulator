@@ -10,6 +10,8 @@
   "felles.ja": "Ja",
   "felles.nei": "Nei",
   "kalkulator.brillestyrke": "Brillestyrke",
+  "kalkulator.høyre_øye": "Høgre auge",
+  "kalkulator.venstre_øye": "Venstre auge",
   "kalkulator.informasjon_om_brillepris": "Dersom brillene kostar mindre enn satsen, får du dekt det brillene kostar. Dersom brillene koster meir enn satsen, må du betale resten sjølv.",
   "kalkulator.informasjon_om_brilleseddel": "Denne informasjonen finn du på brilleseddelen frå optikar.",
   "kalkulator.informasjon_om_sats": "Barnet kan få inntil {{satsBeløp}} kroner i støtte ({{sats}}).",
