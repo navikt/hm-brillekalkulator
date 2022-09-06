@@ -19,11 +19,17 @@ export function Øye(props: ØyeProps) {
   const sfæreName = `${type}Sfære`
   const sylinderName = `${type}Sylinder`
 
+  // Unngår å bruke t(`kalkulator.${type}_øye`), slik at testene kan fange opp at disse er i bruk...
+  let headingTekst = t(`kalkulator.venstre_øye`)
+  if (type === 'høyre') {
+    headingTekst = t(`kalkulator.høyre_øye`)
+  }
+
   return (
     <Grid>
       <ØyeEtikett>
         <Heading level="3" size="small">
-          {t(`kalkulator.${type}_øye`)}
+          {headingTekst}
         </Heading>
       </ØyeEtikett>
       <Controller

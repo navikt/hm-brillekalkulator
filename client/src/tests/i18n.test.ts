@@ -3,7 +3,7 @@ import nb from '../resources/nb_translation.json'
 import nn from '../resources/nn_translation.json'
 
 describe('i18n', () => {
-  test.skip('Ingen translation keys mangler', async () => {
+  test('Ingen translation keys mangler', async () => {
     exec(`grep "t(\'.*\'" --include \*.tsx --include \*.ts -ohrw './src'`, (_, stdout) => {
       const bokmaal = Object.keys(nb)
       const nynorsk = Object.keys(nn)
@@ -27,7 +27,7 @@ describe('i18n', () => {
     })
   })
 
-  test.skip('There should not be unused keys (norsk bokmål)', async () => {
+  test('There should not be unused keys (norsk bokmål)', async () => {
     const translationKeys = Object.keys(nb)
     let everyStringsAreUsed = true
     for (let i = 0; i < translationKeys.length; i += 1) {
