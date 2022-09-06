@@ -41,6 +41,16 @@ const spaHandler: RequestHandler = async (req, res) => {
       context: 'privatperson',
       chatbot: false,
       language: language as Locale,
+      availableLanguages: [
+        {
+          locale: 'nb',
+          handleInApp: true,
+        },
+        {
+          locale: 'nn',
+          handleInApp: true,
+        },
+      ],
     })
     res.render('index.html', decorator)
   } catch (err: unknown) {
