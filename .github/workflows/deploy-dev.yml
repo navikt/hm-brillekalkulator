@@ -8,7 +8,7 @@ on:
       - 'CODEOWNERS'
     branches:
       - main
-      - design-tweaks
+      - skrivefeil
 
 env:
   IMAGE: 'ghcr.io/navikt/hm-brillekalkulator:${{ github.sha }}'
