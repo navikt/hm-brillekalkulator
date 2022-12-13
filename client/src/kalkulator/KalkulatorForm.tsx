@@ -133,7 +133,7 @@ export function KalkulatorForm() {
         ) : (
           <>
             {vilkårsvurdering.vurdering && (
-              <Vilkårsvurdering>
+              <Vilkårsvurdering role="alert">
                 <Heading level="2" spacing size="medium">
                   {vilkårsvurdering.vurdering.overskrift}
                 </Heading>
@@ -157,7 +157,7 @@ export function KalkulatorForm() {
                 </Avstand>
                 {!vilkårsvurdering.vurdering.ok && (
                   <Avstand marginTop={5}>
-                    <Trans t={t} i18nKey="kalkulator.vilkår_ikke_oppfylt">
+                    <Trans t={t} i18nKey="kalkulator.vilkår_ikke_oppfylt" role="alert">
                       <></>
                       <a
                         href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
