@@ -39,5 +39,8 @@
   "kalkulator.vilkår_vedtak_ikke_oppfylt": "Barnet har allereie fått støtte til barnebriller i år. Du kan berre få støtte ein gong i året gjennom denne ordninga.",
   "kalkulator.vilkår_vedtak_ja": "Barnet kan berre få støtte ein gong i året gjennom denne ordninga for barnebriller. Har du fått støtte til briller eller linser gjennom nokre av <1>dei andre støtteordningene frå NAV</1>? Då kan barnet likevel få støtte gjennom denne ordninga.",
   "kalkulator.vilkårsvurdering_ikke_ok": "Det ser ut som barnet ikkje har rett til brillestøtte",
-  "kalkulator.vilkårsvurdering_ok": "Barnet kan ha rett til brillestøtte"
+  "kalkulator.vilkårsvurdering_ok": "Barnet kan ha rett til brillestøtte",
+  "info.satsendring.tittel": "Endring",
+  "info.satsendring.tekst": "Satsane endrast for briller bestilt etter 1. juli. Sjå dei nye satsane på",
+  "info.satsendring.lenketekst": "nav.no/briller-til-barn (opnast i ny side)"
 }

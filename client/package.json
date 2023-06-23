@@ -15,6 +15,7 @@
     "@navikt/ds-icons": "^1.2.0",
     "@navikt/ds-react": "^1.2.0",
     "@navikt/nav-dekoratoren-moduler": "^1.6.9",
+    "@navikt/hm-react-components": "1.0.3",
     "amplitude-js": "^8.20.0",
     "i18next": "^21.9.1",
     "js-cookie": "^3.0.1",
