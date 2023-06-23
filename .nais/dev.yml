@@ -40,3 +40,5 @@ spec:
     outbound:
       rules:
         - application: hm-brille-api
+      external:
+        - host: dekoratoren.ekstern.dev.nav.no
