@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import styled from 'styled-components'
 import { enhet } from '../enhet'
-import { MAX_SFÆRE, MAX_STYRKE, MAX_SYLINDER, MIN_STYRKE } from './config'
+import { MAX_STYRKE, MAX_SYLINDER, MIN_STYRKE } from './config'
 import { FormatertStyrke } from './FormatertStyrke'
 
 export interface ØyeProps {
@@ -39,12 +39,17 @@ export function Øye(props: ØyeProps) {
             error={errors[sfæreName]?.message}
             {...field}
           >
-            <option value="">{t('kalkulator.velg_sfære')}</option>
-            {range(1, MAX_SFÆRE).map((it) => (
-              <option key={it} value={it}>
-                <FormatertStyrke verdi={it} type="sfære" />
-              </option>
-            ))}
+              {rangeSfære(0, 6).reverse().map((it) => (
+                  <option key={it} value={it}>
+                      <FormatertStyrke verdi={it} type="sfære"/>
+                  </option>
+              ))}
+              <option value="" disabled>{t('kalkulator.velg_sfære')}</option>
+              {rangeSfære(-12, -0.25).reverse().map((it) => (
+                  <option key={it} value={it}>
+                      <FormatertStyrke verdi={it} type="sfære" />
+                  </option>
+              ))}
           </Select>
         )}
       />
@@ -59,7 +64,7 @@ export function Øye(props: ØyeProps) {
             error={errors[sylinderName]?.message}
             {...field}
           >
-            <option value="">{t('kalkulator.velg_sylinder')}</option>
+            <option value="" disabled>{t('kalkulator.velg_sylinder')}</option>
             {range(1, MAX_SYLINDER).map((it) => (
               <option key={it} value={it}>
                 <FormatertStyrke verdi={it} type="sylinder" />
@@ -98,3 +103,15 @@ function range(start: number, stop: number, step: number = 0.25): number[] {
     .slice(padding)
   return [MIN_STYRKE, ...valg, MAX_STYRKE]
 }
+
+const rangeSfære = (start: number, end: number, step: number = 0.25) => {
+    let output = [];
+    if (typeof end === 'undefined') {
+        end = start;
+        start = 0;
+    }
+    for (let i = start; i < end + step; i += step) {
+        output.push(i);
+    }
+    return output;
+};
