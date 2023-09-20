@@ -7,12 +7,12 @@ export interface Resultat<T> {
 }
 
 export interface Brilleseddel {
-  høyreSfære: number | ''
-  høyreSylinder: number | ''
-  venstreSfære: number | ''
-  venstreSylinder: number | ''
+  høyreSfære: string
+  høyreSylinder: string
+  venstreSfære: string
+  venstreSylinder: string
+  bestillingsdato?: string
 }
-
 export interface BeregnSatsRequest extends Brilleseddel {}
 
 export interface BeregnSatsResponse {

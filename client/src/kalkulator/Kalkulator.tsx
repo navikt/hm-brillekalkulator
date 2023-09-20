@@ -7,7 +7,6 @@ import {KalkulatorForm} from './KalkulatorForm'
 
 export function Kalkulator() {
     const {t} = useTranslation()
-    HotjarTrigger({timeout: 10000, trigger: 'digihot_hm_brillekalkulator'})
     return (
         <>
             <header>
