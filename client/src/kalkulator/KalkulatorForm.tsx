@@ -1,178 +1,162 @@
-import { Alert, BodyLong, Button, Heading, Loader, Panel, Radio, RadioGroup } from '@navikt/ds-react'
-import React from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { Trans, useTranslation } from 'react-i18next'
+import {Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup} from '@navikt/ds-react'
+import React, {useState} from 'react'
+import {Controller, FormProvider, useForm, useWatch} from 'react-hook-form'
+import {Trans, useTranslation} from 'react-i18next'
 import styled from 'styled-components'
-import { Avstand } from '../components/Avstand'
-import { digihot_customevents, logCustomEvent, logKalkulatorVist, logVilkårsvurderingVist } from '../utils/amplitude'
-import { useVilkårsvurdering } from './useVilkårsvurdering'
-import { Øye } from './Øye'
+import {Avstand} from '../components/Avstand'
+import {logKalkulatorVist} from '../utils/amplitude'
+import {useNavigate} from 'react-router-dom'
+
+import {Øye} from './Øye'
+import {useApplicationContext} from "../state/ApplicationContext";
+import {Brilleseddel} from "../types";
 
 export interface KalkulatorFormData {
-  alder: boolean | null
-  vedtak: boolean | null
-  folketrygden: boolean | null
-  høyreSfære: number | ''
-  høyreSylinder: number | ''
-  venstreSfære: number | ''
-  venstreSylinder: number | ''
+    alder: string | null
+    vedtak: string | null
+    folketrygden: string | null
+    brilleseddel: Brilleseddel
 }
 
 export function KalkulatorForm() {
-  const { t } = useTranslation()
-  logKalkulatorVist()
+    const {t} = useTranslation()
+    logKalkulatorVist()
+    const [venterPåVilkårsvurdering, setVenterPåVilkårsvurdering] = useState(false)
+    const {appState, setAppState} = useApplicationContext()
+    const navigate = useNavigate()
 
-  const {
-    control,
-    watch,
-    formState: { errors },
-    getValues,
-  } = useForm<KalkulatorFormData>({
-    defaultValues: {
-      alder: null,
-      vedtak: null,
-      folketrygden: null,
-      høyreSfære: '',
-      høyreSylinder: '',
-      venstreSfære: '',
-      venstreSylinder: '',
-    },
-  })
+    const methods = useForm<KalkulatorFormData>({
+        defaultValues: {
+            alder: appState.alder,
+            vedtak: appState.vedtak,
+            folketrygden: appState.folketrygden,
+            brilleseddel: {
+                høyreSfære: appState.brilleseddel.høyreSfære,
+                høyreSylinder: appState.brilleseddel.høyreSylinder,
+                venstreSfære: appState.brilleseddel.venstreSfære,
+                venstreSylinder: appState.brilleseddel.venstreSylinder,
+            }
+        },
+    })
 
-  const vilkårsvurdering = useVilkårsvurdering(watch)
 
-  if (vilkårsvurdering.vurdering) {
-    logVilkårsvurderingVist()
-  }
+    const {
+        formState: {errors},
+    } = methods
 
-  return (
-    <form>
-      <Heading level="2" size="medium" spacing>
-        {t('kalkulator.om_barnet')}
-      </Heading>
-      <Grid>
-        <div>
-          <Controller
-            control={control}
-            name="alder"
-            render={({ field }) => (
-              <RadioGroup legend={t('kalkulator.ledetekst_vilkår_alder')} {...field}>
-                <Radio value={true}>{t('felles.ja')}</Radio>
-                <Radio value={false}>{t('kalkulator.nei_over_18_år')}</Radio>
-              </RadioGroup>
-            )}
-          />
-          {getValues('alder') === false && <Alert variant="info">{t('kalkulator.vilkår_alder_nei')}</Alert>}
-        </div>
-        <div>
-          <Controller
-            control={control}
-            name="vedtak"
-            render={({ field }) => (
-              <RadioGroup
-                legend={t('kalkulator.ledetekst_vilkår_vedtak')}
-                description={t('kalkulator.vilkår_vedtak_forklaring')}
-                {...field}
-              >
-                <Radio value={true}>{t('felles.ja')}</Radio>
-                <Radio value={false}>{t('felles.nei')}</Radio>
-              </RadioGroup>
-            )}
-          />
-          {getValues('vedtak') === true && (
-            <Alert variant="info">
-              <Trans t={t} i18nKey="kalkulator.vilkår_vedtak_ja">
-                <></>
-                <a
-                  href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                  target="_blank"
-                />
-                <></>
-              </Trans>
-            </Alert>
-          )}
-        </div>
-        <div>
-          <Controller
-            control={control}
-            name="folketrygden"
-            render={({ field }) => (
-              <RadioGroup legend={t('kalkulator.ledetekst_vilkår_folketrygden')} {...field}>
-                <Radio value={true}>{t('felles.ja')}</Radio>
-                <Radio value={false}>{t('felles.nei')}</Radio>
-              </RadioGroup>
-            )}
-          />
-          {getValues('folketrygden') === false && (
-            <Alert variant="info">
-              <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_nei">
-                <></>
-                <a
-                  href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
-                  target="_blank"
-                />
-              </Trans>
-            </Alert>
-          )}
-        </div>
-      </Grid>
-      <Heading level="2" size="medium" spacing>
-        {t('kalkulator.brillestyrke')}
-      </Heading>
-      <Avstand>
-        <BodyLong>{t('kalkulator.informasjon_om_brilleseddel')}</BodyLong>
-        <Øye control={control} errors={errors} type="høyre" />
-        <Øye control={control} errors={errors} type="venstre" />
-      </Avstand>
+    methods.watch('alder')
+    methods.watch('folketrygden')
+    methods.watch('vedtak')
 
-      <Avstand marginTop={5} marginBottom={5}>
-        {vilkårsvurdering.loading ? (
-          <Centered>
-            <Loader size="xlarge" />
-          </Centered>
-        ) : (
-          <>
-            {vilkårsvurdering.vurdering && (
-              <Vilkårsvurdering role="alert">
-                <Heading level="2" spacing size="medium">
-                  {vilkårsvurdering.vurdering.overskrift}
+    return (
+        <FormProvider {...methods}>
+            <form
+                onSubmit={methods.handleSubmit((data) => {
+                    setAppState((prev) => ({
+                        ...prev,
+                        ...data,
+                    }))
+                    navigate('/svar')
+                })}>
+                <Heading level="2" size="medium" spacing>
+                    {t('kalkulator.om_barnet')}
                 </Heading>
-                <Vilkår>
-                  {vilkårsvurdering.vurdering.vilkår.map(({ variant, beskrivelse }, index) => (
-                    <Alert key={index} variant={variant} inline>
-                      {beskrivelse}
-                    </Alert>
-                  ))}
-                </Vilkår>
-                <Avstand marginTop={5}>
-                  <Button
-                    as="a"
-                    variant="secondary"
-                    href="https://www.nav.no/briller-til-barn"
-                    onClick={() => logCustomEvent(digihot_customevents.KLIKK_MER_INFORMASJON_OM_ORDNINGEN)}
-                    target="_blank"
-                  >
-                    {t('kalkulator.knapp_mer_informasjon')}
-                  </Button>
+                <Grid>
+                    <div>
+                        <Controller
+                            control={methods.control}
+                            name="alder"
+                            rules={{required: 'Velg en verdi'}}
+                            render={({field}) => (
+                                <RadioGroup legend={t('kalkulator.ledetekst_vilkår_alder')} {...field}
+                                            error={errors.alder?.message}>
+                                    <Radio value="ja">{t('felles.ja')}</Radio>
+                                    <Radio value="nei">{t('kalkulator.nei_over_18_år')}</Radio>
+                                </RadioGroup>
+                            )}
+                        />
+                        {methods.getValues('alder') === "nei" &&
+                            <Alert variant="info">{t('kalkulator.vilkår_alder_nei')}</Alert>}
+                    </div>
+                    <div>
+                        <Controller
+                            control={methods.control}
+                            name="vedtak"
+                            rules={{required: 'Velg en verdi'}}
+                            render={({field}) => (
+                                <RadioGroup
+                                    legend={t('kalkulator.ledetekst_vilkår_vedtak')}
+                                    description={t('kalkulator.vilkår_vedtak_forklaring')}
+                                    {...field}
+                                    error={errors.alder?.message}
+                                >
+                                    <Radio value="ja">{t('felles.ja')}</Radio>
+                                    <Radio value="nei">{t('felles.nei')}</Radio>
+                                </RadioGroup>
+                            )}
+                        />
+                        {methods.getValues('vedtak') === "ja" && (
+                            <Alert variant="info">
+                                <Trans t={t} i18nKey="kalkulator.vilkår_vedtak_ja">
+                                    <></>
+                                    <a
+                                        href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
+                                        target="_blank"
+                                    />
+                                    <></>
+                                </Trans>
+                            </Alert>
+                        )}
+                    </div>
+                    <div>
+                        <Controller
+                            control={methods.control}
+                            name="folketrygden"
+                            rules={{required: 'Velg en verdi'}}
+                            render={({field}) => (
+                                <RadioGroup legend={t('kalkulator.ledetekst_vilkår_folketrygden')} {...field}
+                                            error={errors.alder?.message}>
+                                    <Radio value="ja">{t('felles.ja')}</Radio>
+                                    <Radio value="nei">{t('felles.nei')}</Radio>
+                                </RadioGroup>
+                            )}
+
+                        />
+                        {methods.getValues('folketrygden') === "nei" && (
+                            <Alert variant="info">
+                                <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_nei">
+                                    <></>
+                                    <a
+                                        href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
+                                        target="_blank"
+                                    />
+                                </Trans>
+                            </Alert>
+                        )}
+                    </div>
+                </Grid>
+                <Heading level="2" size="medium" spacing>
+                    {t('kalkulator.brillestyrke')}
+                </Heading>
+                <Avstand>
+                    <BodyLong>{t('kalkulator.informasjon_om_brilleseddel')}</BodyLong>
+                    <Øye type="høyre"/>
+                    <Øye type="venstre"/>
                 </Avstand>
-                {!vilkårsvurdering.vurdering.ok && (
-                  <Avstand marginTop={5}>
-                    <Trans t={t} i18nKey="kalkulator.vilkår_ikke_oppfylt" role="alert">
-                      <></>
-                      <a
-                        href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                        target="_blank"
-                      />
-                    </Trans>
-                  </Avstand>
-                )}
-              </Vilkårsvurdering>
-            )}
-          </>
-        )}
-      </Avstand>
-    </form>
-  )
+
+
+                <Button
+                    type="submit"
+                    variant="primary"
+                    size="small"
+                    disabled={venterPåVilkårsvurdering}
+                    loading={venterPåVilkårsvurdering}
+                >
+                    Neste
+                </Button>
+            </form>
+        </FormProvider>
+    )
 }
 
 const Vilkårsvurdering = styled(Panel)`
