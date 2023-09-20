@@ -1,7 +1,7 @@
-import {Alert, BodyLong, Button, Heading, Panel, Radio, RadioGroup} from '@navikt/ds-react'
+import {BodyLong, Button, Heading, Radio, RadioGroup} from '@navikt/ds-react'
 import React, {useState} from 'react'
-import {Controller, FormProvider, useForm, useWatch} from 'react-hook-form'
-import {Trans, useTranslation} from 'react-i18next'
+import {Controller, FormProvider, useForm} from 'react-hook-form'
+import {useTranslation} from 'react-i18next'
 import styled from 'styled-components'
 import {Avstand} from '../components/Avstand'
 import {logKalkulatorVist} from '../utils/amplitude'
@@ -75,8 +75,6 @@ export function KalkulatorForm() {
                                 </RadioGroup>
                             )}
                         />
-                        {methods.getValues('alder') === "nei" &&
-                            <Alert variant="info">{t('kalkulator.vilkår_alder_nei')}</Alert>}
                     </div>
                     <div>
                         <Controller
@@ -95,18 +93,6 @@ export function KalkulatorForm() {
                                 </RadioGroup>
                             )}
                         />
-                        {methods.getValues('vedtak') === "ja" && (
-                            <Alert variant="info">
-                                <Trans t={t} i18nKey="kalkulator.vilkår_vedtak_ja">
-                                    <></>
-                                    <a
-                                        href="https://www.nav.no/no/person/hjelpemidler/hjelpemidler-og-tilrettelegging/hjelpemidler/syn"
-                                        target="_blank"
-                                    />
-                                    <></>
-                                </Trans>
-                            </Alert>
-                        )}
                     </div>
                     <div>
                         <Controller
@@ -122,17 +108,6 @@ export function KalkulatorForm() {
                             )}
 
                         />
-                        {methods.getValues('folketrygden') === "nei" && (
-                            <Alert variant="info">
-                                <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_nei">
-                                    <></>
-                                    <a
-                                        href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden"
-                                        target="_blank"
-                                    />
-                                </Trans>
-                            </Alert>
-                        )}
                     </div>
                 </Grid>
                 <Heading level="2" size="medium" spacing>
@@ -144,36 +119,24 @@ export function KalkulatorForm() {
                     <Øye type="venstre"/>
                 </Avstand>
 
-
-                <Button
-                    type="submit"
-                    variant="primary"
-                    size="small"
-                    disabled={venterPåVilkårsvurdering}
-                    loading={venterPåVilkårsvurdering}
-                >
-                    Neste
-                </Button>
+                <Avstand marginTop={6}>
+                    <Button
+                        type="submit"
+                        variant="primary"
+                        size="medium"
+                        disabled={venterPåVilkårsvurdering}
+                        loading={venterPåVilkårsvurdering}
+                    >
+                        Beregn
+                    </Button>
+                </Avstand>
             </form>
         </FormProvider>
     )
 }
 
-const Vilkårsvurdering = styled(Panel)`
-  background-color: var(--navds-global-color-gray-50);
-`
-
 const Grid = styled.div`
   display: grid;
   gap: var(--navds-spacing-5);
   margin-bottom: var(--navds-spacing-5);
-`
-
-const Vilkår = styled.div`
-  display: grid;
-  gap: var(--navds-spacing-3);
-`
-
-const Centered = styled.div`
-  text-align: center;
 `

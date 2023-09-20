@@ -4,21 +4,18 @@ import {Banner} from '../components/Banner'
 import {HotjarTrigger} from '../components/hotjar-trigger'
 import {ScrollToTop} from '../components/ScrollToTop'
 import {Avstand} from "../components/Avstand";
-import {useApplicationContext} from "../state/ApplicationContext";
 import React, {useEffect} from "react";
 import {digihot_customevents, logCustomEvent, logVilkårsvurderingVist} from "../utils/amplitude";
 import styled from "styled-components";
 import {useVilkårsvurdering} from "../kalkulator/useVilkårsvurdering";
+import {useNavigate} from "react-router-dom";
 
 export function Svar() {
     const {t} = useTranslation()
-    const {appState} = useApplicationContext()
     const vilkårsvurdering = useVilkårsvurdering()
-
+    const navigate = useNavigate()
 
     useEffect(() => {
-        // noinspection JSIgnoredPromiseFromCall
-        // beregnSats(beregnsSatsRequest)
         logVilkårsvurderingVist()
     }, [])
 
@@ -34,6 +31,15 @@ export function Svar() {
             </header>
             <main>
                 <ScrollToTop/>
+                <Button
+                    variant="secondary"
+                    type="button"
+                    onClick={() => {
+                        navigate('/')
+                    }}
+                >
+                    Tilbake
+                </Button>
                 <Avstand marginTop={5} marginBottom={5}>
                     {vilkårsvurdering.loading ? (
                         <Centered>
