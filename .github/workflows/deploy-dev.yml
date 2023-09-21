@@ -9,6 +9,7 @@ on:
     branches:
       - main
       - skrivefeil
+      - feature/amblyopi
 
 env:
   IMAGE: 'ghcr.io/navikt/hm-brillekalkulator:${{ github.sha }}'

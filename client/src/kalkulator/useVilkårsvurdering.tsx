@@ -28,7 +28,7 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         data: beregning,
         reset,
         loading
-    } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/brillesedler')
+    } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/kalkulator/beregningsgrunnlag')
 
     const alder = appState.alder
     const vedtak = appState.vedtak
@@ -39,6 +39,12 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         høyreSylinder: appState.brilleseddel.høyreSylinder,
         venstreSfære: appState.brilleseddel.venstreSfære,
         venstreSylinder: appState.brilleseddel.venstreSylinder,
+        venstreAdd: appState.brilleseddel.venstreAdd,
+        høyreAdd: appState.brilleseddel.høyreAdd,
+        alder: appState.alder === 'ja',
+        vedtak: appState.vedtak === 'ja',
+        folketrygden: appState.folketrygden === 'ja',
+        strabisme: appState.strabisme === 'ja',
     }
 
     useEffect(() => {

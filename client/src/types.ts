@@ -1,4 +1,5 @@
 import type { HttpError } from './error'
+import {b} from "msw/lib/glossary-297d38ba";
 
 export interface Resultat<T> {
   data?: T
@@ -15,7 +16,13 @@ export interface Brilleseddel {
   venstreAdd: string
   bestillingsdato?: string
 }
-export interface BeregnSatsRequest extends Brilleseddel {}
+export interface BeregnSatsRequest extends Brilleseddel {
+  alder: boolean
+  vedtak: boolean
+  folketrygden: boolean
+  strabisme: boolean
+
+}
 
 export interface BeregnSatsResponse {
   sats: SatsType

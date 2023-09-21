@@ -20,10 +20,10 @@ export const initialAppState: AppState = {
     brilleseddel: {
         høyreSfære: '',
         høyreSylinder: '',
-        høyreAdd: '',
+        høyreAdd: '0',
         venstreSfære: '',
         venstreSylinder: '',
-        venstreAdd: '',
+        venstreAdd: '0',
     },
     alder: null,
     folketrygden: null,

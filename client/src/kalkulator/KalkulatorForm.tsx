@@ -8,8 +8,8 @@ import {logKalkulatorVist} from '../utils/amplitude'
 import {useNavigate} from 'react-router-dom'
 
 import {Øye} from './Øye'
-import {useApplicationContext} from "../state/ApplicationContext";
 import {Brilleseddel} from "../types";
+import {useApplicationContext} from "../state/ApplicationContext";
 
 export interface KalkulatorFormData {
     alder: string | null
