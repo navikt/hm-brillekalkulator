@@ -11,8 +11,10 @@ const handlers: RequestHandler[] = [
         beregnSats({
           høyreSfære: req.body.høyreSfære,
           høyreSylinder: req.body.høyreSylinder,
+            høyreAdd: req.body.høyreAdd,
           venstreSfære: req.body.venstreSfære,
           venstreSylinder: req.body.venstreSylinder,
+            venstreAdd: req.body.venstreAdd
         })
       )
     )
