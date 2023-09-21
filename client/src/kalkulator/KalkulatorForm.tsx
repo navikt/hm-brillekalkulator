@@ -86,7 +86,7 @@ export function KalkulatorForm() {
                                     legend={t('kalkulator.ledetekst_vilkår_vedtak')}
                                     description={t('kalkulator.vilkår_vedtak_forklaring')}
                                     {...field}
-                                    error={errors.alder?.message}
+                                    error={errors.vedtak?.message}
                                 >
                                     <Radio value="ja">{t('felles.ja')}</Radio>
                                     <Radio value="nei">{t('felles.nei')}</Radio>
@@ -101,7 +101,7 @@ export function KalkulatorForm() {
                             rules={{required: 'Velg en verdi'}}
                             render={({field}) => (
                                 <RadioGroup legend={t('kalkulator.ledetekst_vilkår_folketrygden')} {...field}
-                                            error={errors.alder?.message}>
+                                            error={errors.folketrygden?.message}>
                                     <Radio value="ja">{t('felles.ja')}</Radio>
                                     <Radio value="nei">{t('felles.nei')}</Radio>
                                 </RadioGroup>
