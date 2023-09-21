@@ -30,6 +30,10 @@ export interface BeregnSatsResponse {
   satsBeløp: number
 }
 
+export interface KalkulatorResultatResponse {
+  brillestøtte: BeregnSatsResponse
+}
+
 export enum SatsType {
   SATS_1 = 'SATS_1',
   SATS_2 = 'SATS_2',

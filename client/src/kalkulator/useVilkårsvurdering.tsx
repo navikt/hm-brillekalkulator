@@ -2,7 +2,7 @@ import type {AlertProps} from '@navikt/ds-react'
 import React, {ReactNode, useEffect} from 'react'
 import {Trans, useTranslation} from 'react-i18next'
 import {Avstand} from '../components/Avstand'
-import {BeregnSatsRequest, BeregnSatsResponse, SatsType} from '../types'
+import {BeregnSatsRequest, BeregnSatsResponse, KalkulatorResultatResponse, SatsType} from '../types'
 import {usePost} from '../usePost'
 import {useApplicationContext} from "../state/ApplicationContext";
 
@@ -28,7 +28,7 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         data: beregning,
         reset,
         loading
-    } = usePost<BeregnSatsRequest, BeregnSatsResponse>('/kalkulator/beregningsgrunnlag')
+    } = usePost<BeregnSatsRequest, KalkulatorResultatResponse>('/kalkulator/beregningsgrunnlag')
 
     const alder = appState.alder
     const vedtak = appState.vedtak
@@ -86,7 +86,7 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
             ),
         })
     }
-    if (beregning.sats === SatsType.INGEN) {
+    if (beregning.brillestøtte.sats === SatsType.INGEN) {
         console.log('sats er ingen')
         console.log(appState.brilleseddel)
         ok = false
@@ -103,8 +103,8 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
                 <>
                     <Avstand>
                         {t('kalkulator.informasjon_om_sats', {
-                            sats: beregning.sats.replace('SATS_', 'sats '),
-                            satsBeløp: beregning.satsBeløp,
+                            sats: beregning.brillestøtte.sats.replace('SATS_', 'sats '),
+                            satsBeløp: beregning.brillestøtte.satsBeløp,
                         })}
                     </Avstand>
                     <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
