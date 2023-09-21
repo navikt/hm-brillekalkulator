@@ -41,8 +41,8 @@ export function beregnSats(brilleseddel: Brilleseddel): BeregnSatsResponse & { b
   const venstreSfære = Number(brilleseddel.venstreSfære)
   const venstreSylinder = Number(brilleseddel.venstreSylinder)
 
-  const sfære = Math.max(høyreSfære, venstreSfære)
-  const sylinder = Math.max(høyreSylinder, venstreSylinder)
+  const sfære = Math.max(Math.abs(høyreSfære), Math.abs(venstreSfære))
+  const sylinder = Math.max(Math.abs(høyreSylinder), Math.abs(venstreSylinder))
 
   let satsType: SatsType = SatsType.INGEN
   if (sfære >= 10.25 || sylinder >= 6.25) {

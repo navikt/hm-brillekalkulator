@@ -15,6 +15,7 @@ export interface KalkulatorFormData {
     alder: string | null
     vedtak: string | null
     folketrygden: string | null
+    strabisme: string | null
     brilleseddel: Brilleseddel
 }
 
@@ -30,11 +31,14 @@ export function KalkulatorForm() {
             alder: appState.alder,
             vedtak: appState.vedtak,
             folketrygden: appState.folketrygden,
+            strabisme: appState.strabisme,
             brilleseddel: {
                 høyreSfære: appState.brilleseddel.høyreSfære,
                 høyreSylinder: appState.brilleseddel.høyreSylinder,
                 venstreSfære: appState.brilleseddel.venstreSfære,
                 venstreSylinder: appState.brilleseddel.venstreSylinder,
+                venstreAdd: appState.brilleseddel.venstreAdd,
+                høyreAdd: appState.brilleseddel.høyreAdd,
             }
         },
     })
@@ -43,10 +47,6 @@ export function KalkulatorForm() {
     const {
         formState: {errors},
     } = methods
-
-    methods.watch('alder')
-    methods.watch('folketrygden')
-    methods.watch('vedtak')
 
     return (
         <FormProvider {...methods}>
@@ -86,7 +86,7 @@ export function KalkulatorForm() {
                                     legend={t('kalkulator.ledetekst_vilkår_vedtak')}
                                     description={t('kalkulator.vilkår_vedtak_forklaring')}
                                     {...field}
-                                    error={errors.alder?.message}
+                                    error={errors.vedtak?.message}
                                 >
                                     <Radio value="ja">{t('felles.ja')}</Radio>
                                     <Radio value="nei">{t('felles.nei')}</Radio>
@@ -101,7 +101,7 @@ export function KalkulatorForm() {
                             rules={{required: 'Velg en verdi'}}
                             render={({field}) => (
                                 <RadioGroup legend={t('kalkulator.ledetekst_vilkår_folketrygden')} {...field}
-                                            error={errors.alder?.message}>
+                                            error={errors.folketrygden?.message}>
                                     <Radio value="ja">{t('felles.ja')}</Radio>
                                     <Radio value="nei">{t('felles.nei')}</Radio>
                                 </RadioGroup>
@@ -109,16 +109,42 @@ export function KalkulatorForm() {
 
                         />
                     </div>
+
                 </Grid>
-                <Heading level="2" size="medium" spacing>
-                    {t('kalkulator.brillestyrke')}
-                </Heading>
+
+                <Avstand marginTop={12}>
+                    <Heading level="2" size="medium" spacing>
+                        {t('kalkulator.brillestyrke')}
+                    </Heading>
+                </Avstand>
                 <Avstand>
                     <BodyLong>{t('kalkulator.informasjon_om_brilleseddel')}</BodyLong>
                     <Øye type="høyre"/>
+                    <hr/>
                     <Øye type="venstre"/>
                 </Avstand>
 
+                <Avstand marginTop={12}>
+                    <div>
+                        <Controller
+                            control={methods.control}
+                            name="strabisme"
+                            rules={{required: 'Velg en verdi'}}
+                            render={({field}) => (
+                                <RadioGroup
+                                    legend={t('kalkulator.ledetekst_vilkår_strabisme')}
+                                    description={t('kalkulator.vilkår_strabisme_forklaring')}
+                                    {...field}
+                                    error={errors.strabisme?.message}
+                                >
+                                    <Radio value="ja">{t('felles.ja')}</Radio>
+                                    <Radio value="nei">{t('felles.nei')}</Radio>
+                                    <Radio value="usikker">{t('felles.vet_ikke')}</Radio>
+                                </RadioGroup>
+                            )}
+                        />
+                    </div>
+                </Avstand>
                 <Avstand marginTop={6}>
                     <Button
                         type="submit"

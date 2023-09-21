@@ -9,8 +9,10 @@ export interface Resultat<T> {
 export interface Brilleseddel {
   høyreSfære: string
   høyreSylinder: string
+  høyreAdd: string
   venstreSfære: string
   venstreSylinder: string
+  venstreAdd: string
   bestillingsdato?: string
 }
 export interface BeregnSatsRequest extends Brilleseddel {}

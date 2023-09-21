@@ -5,6 +5,7 @@ export interface AppState {
     brilleseddel: Brilleseddel,
     alder: string | null,
     folketrygden: string | null,
+    strabisme: string | null,
     vedtak: string | null,
 }
 
@@ -19,12 +20,15 @@ export const initialAppState: AppState = {
     brilleseddel: {
         høyreSfære: '',
         høyreSylinder: '',
+        høyreAdd: '',
         venstreSfære: '',
         venstreSylinder: '',
+        venstreAdd: '',
     },
     alder: null,
     folketrygden: null,
     vedtak: null,
+    strabisme: null
 }
 
 const ApplicationContext = React.createContext<IApplicationContext>({
