@@ -163,6 +163,6 @@ export function KalkulatorForm() {
 
 const Grid = styled.div`
   display: grid;
-  gap: var(--navds-spacing-5);
-  margin-bottom: var(--navds-spacing-5);
+  gap: var(--a-spacing-5);
+  margin-bottom: var(--a-spacing-5);
 `

@@ -2,7 +2,7 @@ import type {AlertProps} from '@navikt/ds-react'
 import React, {ReactNode, useEffect} from 'react'
 import {Trans, useTranslation} from 'react-i18next'
 import {Avstand} from '../components/Avstand'
-import {BeregnSatsRequest, BeregnSatsResponse, KalkulatorResultatResponse, SatsType} from '../types'
+import {BeregnSatsRequest, KalkulatorResultatResponse, SatsType, SatsTypeAmblyopi} from '../types'
 import {usePost} from '../usePost'
 import {useApplicationContext} from "../state/ApplicationContext";
 
@@ -12,15 +12,18 @@ interface Vilkår {
 }
 
 export interface Vilkårsvurdering {
-    loading: boolean | undefined
-    vurdering?: {
-        overskrift: string
-        vilkår: Vilkår[]
-        ok: boolean
-    }
+    overskrift: string
+    vilkår: Vilkår[]
+    ok: boolean
 }
 
-export function useVilkårsvurdering(): Vilkårsvurdering {
+export interface KalkulatorResultat {
+    loading: boolean | undefined
+    vurderingBrillestøtte?: Vilkårsvurdering
+    vurderingAmblyopi?: Vilkårsvurdering
+}
+
+export function useVilkårsvurdering(): KalkulatorResultat {
     const {t} = useTranslation()
     const {appState} = useApplicationContext()
     const {
@@ -52,7 +55,9 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
     }, [])
 
     let ok = true
+    let okAmblyopi = true
     const vilkår: Vilkår[] = []
+    const vilkårAmplyopi: Vilkår[] = []
 
     if (!beregning) {
         return {loading}
@@ -60,13 +65,13 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
 
     if (alder === "nei") {
         ok = false
+        okAmblyopi = false
         vilkår.push({
             variant: 'warning',
             beskrivelse: t('kalkulator.vilkår_alder_ikke_oppfylt'),
         })
     }
     if (vedtak === "ja") {
-        console.log('vedtak er ingen')
         ok = false
         vilkår.push({
             variant: 'warning',
@@ -74,8 +79,8 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         })
     }
     if (folketrygden === "nei") {
-        console.log('ft er ingen')
         ok = false
+        okAmblyopi = false
         vilkår.push({
             variant: 'warning',
             beskrivelse: (
@@ -87,9 +92,15 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         })
     }
     if (beregning.brillestøtte.sats === SatsType.INGEN) {
-        console.log('sats er ingen')
-        console.log(appState.brilleseddel)
         ok = false
+        vilkår.push({
+            variant: 'warning',
+            beskrivelse: t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'),
+        })
+    }
+
+    if (beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INGEN) {
+        okAmblyopi = false
         vilkår.push({
             variant: 'warning',
             beskrivelse: t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'),
@@ -114,13 +125,37 @@ export function useVilkårsvurdering(): Vilkårsvurdering {
         })
     }
 
+    if (okAmblyopi) {
+        vilkårAmplyopi.push({
+            variant: 'success',
+            beskrivelse: (
+                <>
+                    <Avstand>
+                        {t('kalkulator.informasjon_om_sats', {
+                            sats: beregning.amblyopistøtte.sats.replace('SATS_', 'sats '),
+                            satsBeløp: beregning.amblyopistøtte.satsBeløp,
+                        })}
+                    </Avstand>
+                    <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
+                    <Avstand marginTop={4}>{t('kalkulator.informasjon_om_veiledende_svar')}</Avstand>
+                </>
+            ),
+        })
+    }
+
+
     return {
         loading,
-        vurdering: {
+        vurderingBrillestøtte: {
             overskrift: t(ok ? 'kalkulator.vilkårsvurdering_ok' : 'kalkulator.vilkårsvurdering_ikke_ok'),
             vilkår,
             ok,
         },
+        vurderingAmblyopi: {
+            overskrift: t(ok ? 'kalkulator.vilkårsvurdering_amblyopi' : 'kalkulator.vilkårsvurdering_ikke_ok'),
+            vilkår: vilkårAmplyopi,
+            ok,
+        }
     }
 }
 
