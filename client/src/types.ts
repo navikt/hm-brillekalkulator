@@ -25,7 +25,7 @@ export interface BeregnSatsRequest extends Brilleseddel {
 }
 
 export interface BeregnSatsResponse {
-    sats: SatsType
+    sats: SatsTypeBrillestøtte
     satsBeskrivelse: string
     satsBeløp: number
 }
@@ -40,7 +40,7 @@ export interface KalkulatorResultatResponse {
     brillestøtte: BeregnSatsResponse
     amblyopistøtte: BeregnSatsResponseAmblyopi
 }
-export enum SatsType {
+export enum SatsTypeBrillestøtte {
     SATS_1 = 'SATS_1',
     SATS_2 = 'SATS_2',
     SATS_3 = 'SATS_3',
@@ -55,3 +55,5 @@ export enum SatsTypeAmblyopi {
     INDIVIDUELT = 'INDIVIDUELT',
     INGEN = 'INGEN',
 }
+
+export type SatsType = SatsTypeBrillestøtte | SatsTypeAmblyopi

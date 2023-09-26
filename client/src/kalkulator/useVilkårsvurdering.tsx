@@ -1,13 +1,22 @@
 import React, { ReactNode, useEffect } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 import { Avstand } from '../components/Avstand'
-import { BeregnSatsRequest, KalkulatorResultatResponse, SatsType, SatsTypeAmblyopi } from '../types'
+import {
+  BeregnSatsRequest,
+  KalkulatorResultatResponse,
+  SatsTypeBrillestøtte,
+  SatsTypeAmblyopi,
+  SatsType,
+} from '../types'
 import { usePost } from '../usePost'
 import { useApplicationContext } from '../state/ApplicationContext'
+import { BodyShort } from '@navikt/ds-react'
 
 export interface Vilkårsvurdering {
   overskrift: string
   tekst: ReactNode[]
+  satsType: SatsType
+  satsbeløp: number
   ok: boolean
 }
 
@@ -74,29 +83,32 @@ export function useVilkårsvurdering(): KalkulatorResultat {
           <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
         </Trans>
       )
+      tekstAmblyopi.push(
+        <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_ikke_oppfylt">
+          <></>
+          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
+        </Trans>
+      )
     }
   }
-  if (beregning.brillestøtte.sats === SatsType.INGEN) {
+  if (beregning.brillestøtte.sats === SatsTypeBrillestøtte.INGEN) {
     ok = false
     tekst.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))
   }
 
   if (beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INGEN) {
     okAmblyopi = false
-    tekst.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))
+    tekstAmblyopi.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))
   }
 
   if (ok) {
     tekst.push(
       <>
-        <Avstand>
-          {t('kalkulator.informasjon_om_sats', {
-            sats: beregning.brillestøtte.sats.replace('SATS_', 'sats '),
-            satsBeløp: beregning.brillestøtte.satsBeløp,
-          })}
+        <Avstand marginTop={5}>
+          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
         </Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_brillestøtte')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_veiledende_svar')}</Avstand>
       </>
     )
   }
@@ -104,14 +116,11 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   if (okAmblyopi) {
     tekstAmblyopi.push(
       <>
-        <Avstand>
-          {t('kalkulator.informasjon_om_sats', {
-            sats: beregning.amblyopistøtte.sats.replace('SATS_', 'sats '),
-            satsBeløp: beregning.amblyopistøtte.satsBeløp,
-          })}
+        <Avstand marginTop={5}>
+          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
         </Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_veiledende_svar')}</Avstand>
       </>
     )
   }
@@ -119,13 +128,17 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   return {
     loading,
     vurderingBrillestøtte: {
-      overskrift: t(ok ? 'kalkulator.vilkårsvurdering_ok' : 'kalkulator.vilkårsvurdering_ikke_ok'),
+      overskrift: t('kalkulator.overskrift_brillestøtte'),
       tekst,
+      satsType: beregning.brillestøtte.sats,
+      satsbeløp: beregning.brillestøtte.satsBeløp,
       ok,
     },
     vurderingAmblyopi: {
-      overskrift: t(okAmblyopi ? 'kalkulator.vilkårsvurdering_amblyopi' : 'kalkulator.vilkårsvurdering_ikke_ok'),
+      overskrift: t('kalkulator.vilkårsvurdering_amblyopi'),
       tekst: tekstAmblyopi,
+      satsType: beregning.amblyopistøtte.sats,
+      satsbeløp: beregning.amblyopistøtte.satsBeløp,
       ok: okAmblyopi,
     },
   }

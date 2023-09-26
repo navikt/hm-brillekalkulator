@@ -5,7 +5,7 @@ import {beregnSats} from './beregnSats'
 
 const handlers: RequestHandler[] = [
     rest.post<BeregnSatsRequest, {}, KalkulatorResultatResponse>(apiUrl('/kalkulator/beregningsgrunnlag'), (req, res, ctx) => {
-        return res(
+      return res(
             ctx.delay(700),
             ctx.json(
                 beregnSats({

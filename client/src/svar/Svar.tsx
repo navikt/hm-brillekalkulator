@@ -11,6 +11,8 @@ import { useVilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
 import { useNavigate } from 'react-router-dom'
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons'
 import { Vurdering } from './Vurdering'
+import { IngenStøtte } from './IngenStøtte'
+import { VurderingAvslag } from './VurderingAvslag'
 
 export function Svar() {
   const { t } = useTranslation()
@@ -49,7 +51,7 @@ export function Svar() {
             </Centered>
           ) : (
             <>
-              {(vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok) && (
+              {vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok ? (
                 <SuccessTop>
                   <CheckmarkCircleFillIcon title="a11y-title" fontSize="1.5rem" color="green" />
                   <Heading level="2" size="medium">
@@ -63,14 +65,25 @@ export function Svar() {
                     </div>
                   </div>
                 </SuccessTop>
+              ) : (
+                <>
+                  <IngenStøtte />
+                  {vilkårsvurdering.vurderingAmblyopi && vilkårsvurdering.vurderingBrillestøtte && (
+                    <>
+                      <VurderingAvslag type="amblyopi" vurdering={vilkårsvurdering.vurderingAmblyopi} />
+                      <Avstand marginTop={5} />
+                      <VurderingAvslag type="brillestøtte" vurdering={vilkårsvurdering.vurderingBrillestøtte} />
+                    </>
+                  )}
+                </>
               )}
-              {vilkårsvurdering.vurderingAmblyopi && (
+              {vilkårsvurdering.vurderingAmblyopi?.ok && (
                 <Vurdering type="amblyopi" vurdering={vilkårsvurdering.vurderingAmblyopi} />
               )}
-              {vilkårsvurdering.vurderingAmblyopi && vilkårsvurdering.vurderingBrillestøtte && (
+              {vilkårsvurdering.vurderingAmblyopi?.ok && vilkårsvurdering.vurderingBrillestøtte?.ok && (
                 <Avstand marginTop={5} />
               )}
-              {vilkårsvurdering.vurderingBrillestøtte && (
+              {vilkårsvurdering.vurderingBrillestøtte?.ok && (
                 <Vurdering type="brillestøtte" vurdering={vilkårsvurdering.vurderingBrillestøtte} />
               )}
             </>
