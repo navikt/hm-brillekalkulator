@@ -70,6 +70,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     ok = false
     okAmblyopi = false
     tekst.push(t('kalkulator.vilkår_alder_ikke_oppfylt'))
+    tekstAmblyopi.push(t('kalkulator.vilkår_alder_ikke_oppfylt'))
   }
   if (vedtak === 'ja') {
     ok = false
@@ -91,12 +92,12 @@ export function useVilkårsvurdering(): KalkulatorResultat {
       )
     }
   }
-  if (beregning.brillestøtte.sats === SatsTypeBrillestøtte.INGEN) {
+  if (beregning.brillestøtte.sats === SatsTypeBrillestøtte.INGEN && ok) {
     ok = false
     tekst.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))
   }
 
-  if (beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INGEN) {
+  if (beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INGEN && okAmblyopi) {
     okAmblyopi = false
     tekstAmblyopi.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))
   }
