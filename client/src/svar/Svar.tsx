@@ -9,8 +9,8 @@ import { logVilkårsvurderingVist } from '../utils/amplitude'
 import styled from 'styled-components'
 import { useVilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
 import { useNavigate } from 'react-router-dom'
-import { Vurdering } from './Vurdering'
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons'
+import { Vurdering } from './Vurdering'
 
 export function Svar() {
   const { t } = useTranslation()
@@ -56,8 +56,11 @@ export function Svar() {
                     {t('kalkulator.vilkårsvurdering_ok')}
                   </Heading>
                   <div style={{ gridColumnStart: 2, display: 'flex', justifyContent: 'flex-start', padding: '1rem 0' }}>
-                    <InformationSquareFillIcon title="a11y-title" fontSize="1.5rem" color="#236B7D"/>
-                    <div style={{width: "80%", paddingLeft: '0.5rem'}}>Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker eller etter at NAV har behandlet innsendt søknad.</div>
+                    <InformationSquareFillIcon title="a11y-title" fontSize="1.5rem" color="#236B7D" />
+                    <div style={{ width: '80%', paddingLeft: '0.5rem' }}>
+                      Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker eller etter at NAV
+                      har behandlet innsendt søknad.
+                    </div>
                   </div>
                 </SuccessTop>
               )}
