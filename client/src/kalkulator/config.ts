@@ -1,5 +1,5 @@
-export const MAX_SFÆRE = 10
-export const MAX_SYLINDER = 6
+export const MAX_SFÆRE = 10.25
+export const MAX_SYLINDER = 6.25
 
 export const MAX_ADD = 3
 
