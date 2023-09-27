@@ -36,7 +36,9 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     loading,
   } = usePost<BeregnSatsRequest, KalkulatorResultatResponse>('/kalkulator/beregningsgrunnlag')
 
-  const alder = appState.alder
+  const alder = Number(appState.alder)
+  const alderUnder18 = alder < 18
+  const alderUnder10 = alder < 10
   const vedtak = appState.vedtak
   const folketrygden = appState.folketrygden
 
@@ -47,7 +49,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     venstreSylinder: appState.brilleseddel.venstreSylinder,
     venstreAdd: appState.brilleseddel.venstreAdd,
     høyreAdd: appState.brilleseddel.høyreAdd,
-    alder: appState.alder === 'ja',
+    alder: alderUnder18,
     vedtak: appState.vedtak === 'ja',
     folketrygden: appState.folketrygden === 'ja',
     strabisme: appState.strabisme === 'ja',
@@ -66,10 +68,12 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     return { loading }
   }
 
-  if (alder === 'nei') {
+  if (!alderUnder18) {
     ok = false
-    okAmblyopi = false
     tekst.push(t('kalkulator.vilkår_alder_ikke_oppfylt'))
+  }
+  if (!alderUnder10) {
+    okAmblyopi = false
     tekstAmblyopi.push(t('kalkulator.vilkår_alder_ikke_oppfylt'))
   }
   if (vedtak === 'ja') {

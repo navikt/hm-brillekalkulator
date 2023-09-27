@@ -3,7 +3,7 @@ import type {Brilleseddel} from '../types'
 
 export interface AppState {
     brilleseddel: Brilleseddel,
-    alder: string | null,
+    alder: string,
     folketrygden: string | null,
     strabisme: string | null,
     vedtak: string | null,
@@ -25,7 +25,7 @@ export const initialAppState: AppState = {
         venstreSylinder: '',
         venstreAdd: '0',
     },
-    alder: null,
+    alder: '',
     folketrygden: null,
     vedtak: null,
     strabisme: null

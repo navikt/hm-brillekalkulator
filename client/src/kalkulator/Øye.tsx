@@ -124,7 +124,7 @@ const Grid = styled.div`
   }
 `
 
-function range(start: number, stop: number, step = 0.25): number[] {
+export function range(start: number, stop: number, step = 0.25): number[] {
     const valg = []
     for (let i = start; i <= stop; i += step) {
         valg.push(i)
