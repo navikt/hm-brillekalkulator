@@ -18,6 +18,7 @@ export interface Vilkårsvurdering {
   satsType: SatsType
   satsbeløp: number
   ok: boolean
+  flereOrdninger: boolean
 }
 
 export interface KalkulatorResultat {
@@ -138,6 +139,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
       satsType: beregning.brillestøtte.sats,
       satsbeløp: beregning.brillestøtte.satsBeløp,
       ok,
+      flereOrdninger: ok && okAmblyopi,
     },
     vurderingAmblyopi: {
       overskrift: t('kalkulator.vilkårsvurdering_amblyopi'),
@@ -145,6 +147,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
       satsType: beregning.amblyopistøtte.sats,
       satsbeløp: beregning.amblyopistøtte.satsBeløp,
       ok: okAmblyopi,
+      flereOrdninger: ok && okAmblyopi,
     },
   }
 }

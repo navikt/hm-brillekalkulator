@@ -54,7 +54,7 @@ export function Svar() {
               {vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok ? (
                 <SuccessTop>
                   <CheckmarkCircleFillIcon title="a11y-title" fontSize="1.5rem" color="green" />
-                  <Heading level="2" size="medium">
+                  <Heading level="2" size="large">
                     {t('kalkulator.vilkårsvurdering_ok')}
                   </Heading>
                   <div style={{ gridColumnStart: 2, display: 'flex', justifyContent: 'flex-start', padding: '1rem 0' }}>

@@ -1,4 +1,4 @@
-import { Button, Heading, Link, Panel, Popover } from '@navikt/ds-react'
+import { BodyShort, Button, Heading, Link, Panel, Popover } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
 import { Avstand } from '../components/Avstand'
 import React, { useRef, useState } from 'react'
@@ -15,7 +15,15 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
   const [openState, setOpenState] = useState(false)
 
   return (
-    <>
+    <YtrePanel>
+      {props.type === 'brillestøtte' && props.vurdering.flereOrdninger && (
+        <>
+          <div style={{ padding: '1rem' }}>
+            <BodyShort>{t('kalkulator.støtte_to_ordninger')}</BodyShort>
+          </div>
+          <hr style={{borderTop: '1px solid #CBCFD5', marginBottom: '1.5rem'}}/>
+        </>
+      )}
       <VurderingPanel role="alert">
         <BrillerIkon />
         <div>
@@ -78,18 +86,21 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
           )}
         </div>
       </VurderingPanel>
-    </>
+    </YtrePanel>
   )
 }
 
-const VurderingPanel = styled(Panel)`
+const YtrePanel = styled(Panel)`
   background-color: var(--a-gray-100);
   border-radius: 10px;
+  overflow: hidden;
+`
+const VurderingPanel = styled.div`
+  background-color: var(--a-gray-100);
   display: grid;
   grid-template-columns: auto 1fr 0.15fr;
   column-gap: var(--a-spacing-3);
 `
-
 const Vilkår = styled.div`
   display: grid;
   gap: var(--a-spacing-3);
