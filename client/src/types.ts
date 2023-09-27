@@ -18,8 +18,6 @@ export interface Brilleseddel {
 
 export interface BeregnSatsRequest extends Brilleseddel {
     alder: boolean
-    vedtak: boolean
-    folketrygden: boolean
     strabisme: boolean
 
 }

@@ -1,12 +1,12 @@
 import React, { ReactNode, useEffect } from 'react'
-import { Trans, useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 import { Avstand } from '../components/Avstand'
 import {
   BeregnSatsRequest,
   KalkulatorResultatResponse,
-  SatsTypeBrillestøtte,
-  SatsTypeAmblyopi,
   SatsType,
+  SatsTypeAmblyopi,
+  SatsTypeBrillestøtte,
 } from '../types'
 import { usePost } from '../usePost'
 import { useApplicationContext } from '../state/ApplicationContext'
@@ -40,8 +40,6 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   const alder = Number(appState.alder)
   const alderUnder18 = alder < 18
   const alderUnder10 = alder < 10
-  const vedtak = appState.vedtak
-  const folketrygden = appState.folketrygden
 
   const beregnSatsRequest: BeregnSatsRequest = {
     høyreSfære: appState.brilleseddel.høyreSfære,
@@ -51,8 +49,6 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     venstreAdd: appState.brilleseddel.venstreAdd,
     høyreAdd: appState.brilleseddel.høyreAdd,
     alder: alderUnder18,
-    vedtak: appState.vedtak === 'ja',
-    folketrygden: appState.folketrygden === 'ja',
     strabisme: appState.strabisme === 'ja',
   }
 
@@ -75,28 +71,9 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   }
   if (!alderUnder10) {
     okAmblyopi = false
-    tekstAmblyopi.push(t('kalkulator.vilkår_alder_ikke_oppfylt'))
+    tekstAmblyopi.push(t('kalkulator.vilkår_alder_amblyopi_ikke_oppfylt'))
   }
-  if (vedtak === 'ja') {
-    ok = false
-    tekst.push(t('kalkulator.vilkår_vedtak_ikke_oppfylt'))
-    if (folketrygden === 'nei') {
-      ok = false
-      okAmblyopi = false
-      tekst.push(
-        <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_ikke_oppfylt">
-          <></>
-          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
-        </Trans>
-      )
-      tekstAmblyopi.push(
-        <Trans t={t} i18nKey="kalkulator.vilkår_folketrygden_ikke_oppfylt">
-          <></>
-          <a href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden" />
-        </Trans>
-      )
-    }
-  }
+
   if (beregning.brillestøtte.sats === SatsTypeBrillestøtte.INGEN && ok) {
     ok = false
     tekst.push(t('kalkulator.vilkår_brillestyrke_ikke_oppfylt'))

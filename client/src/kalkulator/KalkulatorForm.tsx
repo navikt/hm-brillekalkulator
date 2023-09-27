@@ -10,13 +10,9 @@ import { useNavigate } from 'react-router-dom'
 import { range, Øye } from './Øye'
 import { Brilleseddel } from '../types'
 import { useApplicationContext } from '../state/ApplicationContext'
-import { MAX_SFÆRE } from './config'
-import { FormatertStyrke } from './FormatertStyrke'
 
 export interface KalkulatorFormData {
   alder: string
-  vedtak: string | null
-  folketrygden: string | null
   strabisme: string | null
   brilleseddel: Brilleseddel
 }
@@ -31,8 +27,6 @@ export function KalkulatorForm() {
   const methods = useForm<KalkulatorFormData>({
     defaultValues: {
       alder: appState.alder,
-      vedtak: appState.vedtak,
-      folketrygden: appState.folketrygden,
       strabisme: appState.strabisme,
       brilleseddel: {
         høyreSfære: appState.brilleseddel.høyreSfære,
@@ -80,41 +74,6 @@ export function KalkulatorForm() {
                     Velg alder
                   </option>
                 </Select>
-              )}
-            />
-          </div>
-          <div>
-            <Controller
-              control={methods.control}
-              name="vedtak"
-              rules={{ required: 'Velg en verdi' }}
-              render={({ field }) => (
-                <RadioGroup
-                  legend={t('kalkulator.ledetekst_vilkår_vedtak')}
-                  description={t('kalkulator.vilkår_vedtak_forklaring')}
-                  {...field}
-                  error={errors.vedtak?.message}
-                >
-                  <Radio value="ja">{t('felles.ja')}</Radio>
-                  <Radio value="nei">{t('felles.nei')}</Radio>
-                </RadioGroup>
-              )}
-            />
-          </div>
-          <div>
-            <Controller
-              control={methods.control}
-              name="folketrygden"
-              rules={{ required: 'Velg en verdi' }}
-              render={({ field }) => (
-                <RadioGroup
-                  legend={t('kalkulator.ledetekst_vilkår_folketrygden')}
-                  {...field}
-                  error={errors.folketrygden?.message}
-                >
-                  <Radio value="ja">{t('felles.ja')}</Radio>
-                  <Radio value="nei">{t('felles.nei')}</Radio>
-                </RadioGroup>
               )}
             />
           </div>

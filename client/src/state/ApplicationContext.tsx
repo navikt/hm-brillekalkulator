@@ -4,9 +4,7 @@ import type {Brilleseddel} from '../types'
 export interface AppState {
     brilleseddel: Brilleseddel,
     alder: string,
-    folketrygden: string | null,
     strabisme: string | null,
-    vedtak: string | null,
 }
 
 interface IApplicationContext {
@@ -26,8 +24,6 @@ export const initialAppState: AppState = {
         venstreAdd: '0',
     },
     alder: '',
-    folketrygden: null,
-    vedtak: null,
     strabisme: null
 }
 
