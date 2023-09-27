@@ -92,6 +92,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
         </Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_brillestøtte')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.vilkår_vedtak_forklaring')}</Avstand>
       </>
     )
   }
