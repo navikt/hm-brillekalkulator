@@ -81,3 +81,10 @@ jobs:
           body: ${{ env.CHANGE_LOG }}
           draft: true
           prerelease: false
+      - name: deploy to labs
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/labs.yml
+          VAR: image=${{ env.IMAGE }},commit=${{ github.sha }}

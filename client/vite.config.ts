@@ -19,7 +19,7 @@ const htmlPlugin = ({ development }: { development?: boolean }): Plugin => ({
             tag: 'script',
             children: `window.appSettings = {
               GIT_COMMIT: 'ukjent',
-              MILJO: 'dev-gcp',
+              MILJO: 'labs-gcp',
               USE_MSW: true,
             }`,
           },

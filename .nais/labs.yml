@@ -1,0 +1,50 @@
+apiVersion: nais.io/v1alpha1
+kind: Application
+metadata:
+  labels:
+    app: hm-brillekalkulator-labs
+    team: teamdigihot
+  name: hm-brillekalkulator-labs
+  namespace: teamdigihot
+spec:
+  image: {{image}}
+  team: teamdigihot
+  port: 5000
+  ingresses:
+    - https://brille-labs.ekstern.dev.nav.no/hjelpemidler/brillekalkulator
+  liveness:
+    path: /hjelpemidler/brillekalkulator/internal/isalive
+  readiness:
+    path: /hjelpemidler/brillekalkulator/internal/isready
+  prometheus:
+    enabled: true
+    path: /hjelpemidler/brillekalkulator/internal/metrics
+  replicas:
+    max: 1
+    min: 1
+  resources:
+    limits:
+      cpu: 500m
+      memory: 1024Mi
+    requests:
+      cpu: 20m
+      memory: 300Mi
+  secureLogs:
+    enabled: true
+  env:
+    - name: IS_LABS
+      value: 'true'
+    - name: BRILLE_API_BASE_URL
+      value: ''
+    - name: BRILLE_API_TARGET_AUDIENCE
+      value: ''
+    - name: PORT
+      value: '5000'
+    - name: USE_MSW
+      value: 'true'
+    - name: GIT_COMMIT
+      value: {{commit}}
+  accessPolicy:
+    outbound:
+      external:
+        - host: dekoratoren.ekstern.dev.nav.no
