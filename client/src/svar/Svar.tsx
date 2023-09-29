@@ -23,15 +23,15 @@ export function Svar() {
 
   useEffect(() => {
     logVilkårsvurderingVist()
+    if (appState.brilleseddel === null) {
+      console.log('brilleseddel er null')
+      navigate('/')
+    }
   }, [])
 
-  if(appState.brilleseddel === null){
-    console.log('brilleseddel er null')
-    navigate('/')
-  }
+
 
   HotjarTrigger({ timeout: 10000, trigger: 'digihot_hm_brillekalkulator' })
-
 
   return (
     <>
