@@ -20,7 +20,7 @@ export interface KalkulatorFormData {
 export function KalkulatorForm() {
   const { t } = useTranslation()
   logKalkulatorVist()
-  const [venterPåVilkårsvurdering, setVenterPåVilkårsvurdering] = useState(false)
+  const [venterPåVilkårsvurdering] = useState(false)
   const { appState, setAppState } = useApplicationContext()
   const navigate = useNavigate()
 
@@ -29,12 +29,12 @@ export function KalkulatorForm() {
       alder: appState.alder,
       strabisme: appState.strabisme,
       brilleseddel: {
-        høyreSfære: appState.brilleseddel.høyreSfære,
-        høyreSylinder: appState.brilleseddel.høyreSylinder,
-        venstreSfære: appState.brilleseddel.venstreSfære,
-        venstreSylinder: appState.brilleseddel.venstreSylinder,
-        venstreAdd: appState.brilleseddel.venstreAdd,
-        høyreAdd: appState.brilleseddel.høyreAdd,
+        høyreSfære: appState.brilleseddel?.høyreSfære || '',
+        høyreSylinder: appState.brilleseddel?.høyreSylinder || '',
+        venstreSfære: appState.brilleseddel?.venstreSfære || '',
+        venstreSylinder: appState.brilleseddel?.venstreSylinder || '',
+        venstreAdd: appState.brilleseddel?.venstreAdd || '',
+        høyreAdd: appState.brilleseddel?.høyreAdd || '',
       },
     },
   })
@@ -64,7 +64,13 @@ export function KalkulatorForm() {
               name="alder"
               rules={{ required: 'Velg en verdi' }}
               render={({ field }) => (
-                <Select label= {t('kalkulator.ledetekst_vilkår_alder')} size="small" error={errors.alder?.message} {...field} style={{width: '8rem'}}>
+                <Select
+                  label={t('kalkulator.ledetekst_vilkår_alder')}
+                  size="small"
+                  error={errors.alder?.message}
+                  {...field}
+                  style={{ width: '8rem' }}
+                >
                   {range(0, 17, 1).map((it) => (
                     <option key={it} value={it}>
                       {it}

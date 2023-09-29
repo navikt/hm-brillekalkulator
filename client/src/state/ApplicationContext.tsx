@@ -2,7 +2,7 @@ import React, {Dispatch, SetStateAction, useContext, useState} from 'react'
 import type {Brilleseddel} from '../types'
 
 export interface AppState {
-    brilleseddel: Brilleseddel,
+    brilleseddel: Brilleseddel | null,
     alder: string,
     strabisme: string | null,
 }
@@ -15,14 +15,7 @@ interface IApplicationContext {
 }
 
 export const initialAppState: AppState = {
-    brilleseddel: {
-        høyreSfære: '',
-        høyreSylinder: '',
-        høyreAdd: '0',
-        venstreSfære: '',
-        venstreSylinder: '',
-        venstreAdd: '0',
-    },
+    brilleseddel: null,
     alder: '',
     strabisme: null
 }

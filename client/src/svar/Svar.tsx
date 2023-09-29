@@ -13,17 +13,26 @@ import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/akse
 import { Vurdering } from './Vurdering'
 import { IngenStøtte } from './IngenStøtte'
 import { VurderingAvslag } from './VurderingAvslag'
+import { useApplicationContext } from '../state/ApplicationContext'
 
 export function Svar() {
   const { t } = useTranslation()
   const vilkårsvurdering = useVilkårsvurdering()
   const navigate = useNavigate()
+  const { appState } = useApplicationContext()
 
   useEffect(() => {
     logVilkårsvurderingVist()
   }, [])
 
+  if(appState.brilleseddel === null){
+    console.log('brilleseddel er null')
+    navigate('/')
+  }
+
   HotjarTrigger({ timeout: 10000, trigger: 'digihot_hm_brillekalkulator' })
+
+
   return (
     <>
       <header>

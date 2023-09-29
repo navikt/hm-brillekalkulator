@@ -41,6 +41,10 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   const alderUnder18 = alder < 18
   const alderUnder10 = alder < 10
 
+  if (appState.brilleseddel === null) {
+    return { loading: true }
+  }
+
   const beregnSatsRequest: BeregnSatsRequest = {
     høyreSfære: appState.brilleseddel.høyreSfære,
     høyreSylinder: appState.brilleseddel.høyreSylinder,
