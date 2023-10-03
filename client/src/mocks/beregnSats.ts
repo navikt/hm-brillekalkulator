@@ -3,8 +3,8 @@ import {
   BeregnSatsResponseAmblyopi,
   Brilleseddel,
   KalkulatorResultatResponse,
-  SatsTypeBrillestøtte,
   SatsTypeAmblyopi,
+  SatsTypeBrillestøtte,
 } from '../types'
 
 const satser: Record<SatsTypeBrillestøtte, BeregnSatsResponse> = {
@@ -67,7 +67,7 @@ const satserAmblyopi: Record<SatsTypeAmblyopi, BeregnSatsResponseAmblyopi> = {
   },
 }
 
-export function beregnSats(brilleseddel: Brilleseddel): KalkulatorResultatResponse {
+export function beregnSats(brilleseddel: Brilleseddel, alder: Boolean, strabisme: Boolean): KalkulatorResultatResponse {
   const høyreSfære = Number(brilleseddel.høyreSfære)
   const høyreSylinder = Number(brilleseddel.høyreSylinder)
   const venstreSfære = Number(brilleseddel.venstreSfære)
@@ -102,6 +102,19 @@ export function beregnSats(brilleseddel: Brilleseddel): KalkulatorResultatRespon
     satsTypeAmblyopi = SatsTypeAmblyopi.SATS_2
   } else if (sfære <= 3.75) {
     satsTypeAmblyopi = SatsTypeAmblyopi.SATS_1
+  }
+
+  if (!alder) {
+    satsTypeAmblyopi = SatsTypeAmblyopi.INGEN
+  }
+  if (
+    !strabisme &&
+    !(Math.abs(høyreSylinder) >= 1.5) &&
+    !(Math.abs(venstreSylinder) >= 1.5) &&
+    !(Math.abs(høyreSfære - Math.abs(venstreSfære)) >= 1) &&
+    !(høyreSfære >= 4 || venstreSfære >= 4)
+  ) {
+    satsTypeAmblyopi = SatsTypeAmblyopi.INGEN
   }
 
   const sats = satser[satsType]
