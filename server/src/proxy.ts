@@ -12,7 +12,7 @@ export const proxyHandlers = {
   api() {
     return createProxy(config.api.brille_api_base_url, {
       proxyReqPathResolver(req) {
-        return req.originalUrl.replace('/hjelpemidler/brillekalkulator/', '/')
+        return req.originalUrl.replace('/hjelpemidler/brillekalkulator-preview/', '/')
       },
     })
   },

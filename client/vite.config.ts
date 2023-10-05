@@ -36,7 +36,7 @@ const htmlPlugin = ({ development }: { development?: boolean }): Plugin => ({
           {
             tag: 'script',
             attrs: {
-              src: '/hjelpemidler/brillekalkulator/settings.js',
+              src: '/hjelpemidler/brillekalkulator-preview/settings.js',
             },
           },
         ],
@@ -47,7 +47,7 @@ const htmlPlugin = ({ development }: { development?: boolean }): Plugin => ({
 
 // https://vitejs.dev/config/
 export default defineConfig((env) => ({
-  base: env.mode === 'development' ? '/' : '/hjelpemidler/brillekalkulator/',
+  base: env.mode === 'development' ? '/' : '/hjelpemidler/brillekalkulator-preview/',
   plugins: [htmlPlugin({ development: env.mode === 'development' }), react(), splitVendorChunkPlugin()],
   build: {
     sourcemap: true,

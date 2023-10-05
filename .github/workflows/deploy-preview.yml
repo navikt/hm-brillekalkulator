@@ -1,4 +1,4 @@
-name: Build, deploy to dev-gcp
+name: Build, deploy to preview
 on:
   push:
     paths-ignore:
@@ -7,9 +7,7 @@ on:
       - 'LICENCE'
       - 'CODEOWNERS'
     branches:
-      - main
-      - skrivefeil
-      - feature/amblyopi
+      - feature/amblyopi-preview
 
 env:
   IMAGE: 'ghcr.io/navikt/hm-brillekalkulator:${{ github.sha }}'
@@ -58,33 +56,10 @@ jobs:
           cache-to: type=gha,mode=max
           secrets: |
             "NODE_AUTH_TOKEN=${{ secrets.READER_TOKEN }}"
-      - name: deploy to dev
+      - name: deploy to preview
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: .nais/dev.yml
-          VAR: image=${{ env.IMAGE }},commit=${{ github.sha }}
-      - name: post-deploy
-        if: github.ref == 'refs/heads/main'
-        uses: navikt/digihot-deploy/actions/post-deploy@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: draft release
-        if: github.ref == 'refs/heads/main'
-        uses: actions/create-release@latest
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.VERSION_TAG }}
-          release_name: ${{ env.APPLICATION }} ${{ env.VERSION_TAG }}
-          body: ${{ env.CHANGE_LOG }}
-          draft: true
-          prerelease: false
-      - name: deploy to labs
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-gcp
-          RESOURCE: .nais/labs.yml
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/preview.yml
           VAR: image=${{ env.IMAGE }},commit=${{ github.sha }}
