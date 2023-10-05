@@ -3,7 +3,7 @@ import type { Resultat } from './types'
 
 export function baseUrl(url: string = '') {
   if (process.env.NODE_ENV === 'production') {
-    return `/hjelpemidler/brillekalkulator${url}`
+    return `/hjelpemidler/brillekalkulator-preview${url}`
   } else {
     return url
   }
