@@ -101,14 +101,24 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     )
   }
 
-  if (okAmblyopi) {
+  if (okAmblyopi && beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INDIVIDUELT) {
     tekstAmblyopi.push(
       <>
         <Avstand marginTop={5}>
           <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
         </Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.hva_dekkes_individuell_sats')}</Avstand>
+      </>
+    )
+  } else if (okAmblyopi && beregning.amblyopistøtte.sats !== SatsTypeAmblyopi.INDIVIDUELT) {
+    tekstAmblyopi.push(
+      <>
+        <Avstand marginTop={5}>
+          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
+        </Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
+        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris_amblyopi')}</Avstand>
       </>
     )
   }

@@ -87,7 +87,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                 control={control}
                 render={({field}) => (
                     <Select
-                        label={'ADD'}
+                        label={'Addisjon (ADD)'}
                         size="small"
                         error={errors.brilleseddel?.[`${type}Add`]?.message}
                         {...field}
