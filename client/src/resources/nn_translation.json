@@ -14,6 +14,7 @@
   "kalkulator.høyre_øye": "Høgre auge",
   "kalkulator.venstre_øye": "Venstre auge",
   "kalkulator.informasjon_om_brillepris": "Dersom brillene kostar mindre enn satsen, får du dekt det brillene kostar. Dersom brillene koster meir enn satsen, må du betale resten sjølv.",
+  "kalkulator.informasjon_om_brillepris_amblyopi": "Dersom brillene koster meir enn satsen, må du betale resten sjølv.",
   "kalkulator.informasjon_om_brilleseddel": "Denne informasjonen finn du på brilleseddelen frå optikar.",
   "kalkulator.informasjon_om_sats": "Barnet kan få inntil {{satsBeløp}} kroner i støtte ({{sats}}).",
   "kalkulator.informasjon_om_veiledende_svar": "Dette er kun eit rettleiande svar. Endeleg svar får du etter eit besøk hjå optikar, når optikar har fylt ut NAVs skjema for brillestøtte.",
