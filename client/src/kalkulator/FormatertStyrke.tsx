@@ -4,10 +4,17 @@ interface FormatertStyrkeProps {
 
 export function FormatertStyrke(props: FormatertStyrkeProps) {
   const { verdi } = props
+
   if (verdi == null || verdi === '') {
     return null
   }
 
+  if (verdi > 10.0) {
+    return 'Over 10'
+  }
+  if (verdi < -10.0) {
+    return 'Over -10'
+  }
   return <>{desimaltallMedFortegn(verdi)}</>
 }
 
