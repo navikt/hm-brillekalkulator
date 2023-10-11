@@ -17,7 +17,7 @@
   "kalkulator.informasjon_om_brillepris_amblyopi": "Hvis brillene koster mer enn satsen, må du betale resten selv.",
   "kalkulator.informasjon_om_brilleseddel": "Denne informasjonen finner du på brilleseddelen fra optiker.",
   "kalkulator.informasjon_om_sats": "Barnet kan få inntil {{satsBeløp}} kroner i støtte ({{sats}}).",
-  "kalkulator.informasjon_om_veiledende_svar": "Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker, når optiker har fylt ut NAVs skjema for brillestøtte.",
+  "kalkulator.informasjon_om_veiledende_svar": "Dette er kun et veiledende svar. Endelig svar får du etter et besøk hos optiker eller etter at NAV har behandlet innsendt søknad.",
   "kalkulator.informasjon_om_kalkulator": "Dette er en kalkulator som kun gir et veiledende svar basert på grunnleggende informasjon om barnets syn. Endelig svar får du etter et besøk hos optiker eller etter at NAV har behandlet innsendt søknad.",
   "kalkulator.knapp_mer_informasjon": "Mer informasjon om denne ordningen",
   "kalkulator.ledetekst_sfære": "Sfære (SPH)",
