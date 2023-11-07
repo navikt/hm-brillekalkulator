@@ -24,12 +24,9 @@ export function Svar() {
   useEffect(() => {
     logVilkårsvurderingVist()
     if (appState.brilleseddel === null) {
-      console.log('brilleseddel er null')
       navigate('/')
     }
   }, [])
-
-
 
   HotjarTrigger({ timeout: 10000, trigger: 'digihot_hm_brillekalkulator' })
 
@@ -62,12 +59,12 @@ export function Svar() {
             <>
               {vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok ? (
                 <SuccessTop>
-                  <CheckmarkCircleFillIcon title="a11y-title" fontSize="1.5rem" color="green" />
+                  <CheckmarkCircleFillIcon aria-label="suksess" title="suksess" fontSize="1.5rem" color="green" />
                   <Heading level="2" size="large">
                     {t('kalkulator.vilkårsvurdering_ok')}
                   </Heading>
                   <div style={{ gridColumnStart: 2, display: 'flex', justifyContent: 'flex-start', padding: '1rem 0' }}>
-                    <InformationSquareFillIcon title="a11y-title" fontSize="1.5rem" color="#236B7D" />
+                    <InformationSquareFillIcon aria-label="informasjon" title="informasjon" fontSize="1.5rem" color="#236B7D" />
                     <div style={{ width: '80%', paddingLeft: '0.5rem' }}>
                       {t('kalkulator.informasjon_om_veiledende_svar')}
                     </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const BrillerIkon = () => (
-  <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden={true}>
     <g filter="url(#filter0_d_580_1956)">
       <circle cx="24.6588" cy="20.6588" r="20.6588" fill="#CCF1D6" />
       <path

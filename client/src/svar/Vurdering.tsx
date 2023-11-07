@@ -1,18 +1,15 @@
-import { BodyShort, Button, Heading, Link, Panel, Popover } from '@navikt/ds-react'
+import { BodyShort, Heading, HelpText, Link, Panel } from "@navikt/ds-react";
 import { useTranslation } from 'react-i18next'
 import { Avstand } from '../components/Avstand'
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { digihot_customevents, logCustomEvent } from '../utils/amplitude'
 import styled from 'styled-components'
 import { Vilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
 import { BrillerIkon } from '../resources/svg/Briller'
 import { SatsTypeAmblyopi } from '../types'
-import { QuestionmarkIcon } from '@navikt/aksel-icons'
 
 export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering: Vilkårsvurdering }) {
   const { t } = useTranslation()
-  const buttonRef = useRef<HTMLButtonElement>(null)
-  const [openState, setOpenState] = useState(false)
 
   return (
     <YtrePanel>
@@ -25,7 +22,7 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
         </>
       )}
       <VurderingPanel role="alert">
-        <BrillerIkon />
+        <BrillerIkon/>
         <div>
           <Heading level="2" spacing size="medium">
             {props.vurdering.overskrift}
@@ -55,28 +52,9 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
               <Heading level="2" size="xsmall" style={{ alignContent: 'center' }}>
                 (Individuell sats)
               </Heading>
-              <Button
-                ref={buttonRef}
-                onClick={() => {
-                  setOpenState(true)
-                }}
-                style={{ border: 'none', backgroundColor: 'transparent', margin: 0, padding: 0 }}
-              >
-                <QuestionmarkIcon
-                  title="a11y-title"
-                  fontSize="1.5rem"
-                  color="#236B7D"
-                  style={{ border: 'solid', borderWidth: '2px', borderRadius: '1rem' }}
-                />
-              </Button>
-              <Popover
-                placement="right"
-                open={openState}
-                onClose={() => setOpenState(false)}
-                anchorEl={buttonRef.current}
-              >
-                <Popover.Content>{t('kalkulator.om_individuell_sats')}</Popover.Content>
-              </Popover>
+              <HelpText title="Hva betyr dette?">
+                {t('kalkulator.om_individuell_sats')}
+              </HelpText>
             </div>
           ) : (
             <Heading level="2" spacing size="small">

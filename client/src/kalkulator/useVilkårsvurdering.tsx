@@ -92,7 +92,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     tekst.push(
       <>
         <Avstand marginTop={5}>
-          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
+          <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
         </Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_brillestøtte')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
@@ -105,7 +105,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     tekstAmblyopi.push(
       <>
         <Avstand marginTop={5}>
-          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
+          <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
         </Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hva_dekkes_individuell_sats')}</Avstand>
@@ -115,7 +115,7 @@ export function useVilkårsvurdering(): KalkulatorResultat {
     tekstAmblyopi.push(
       <>
         <Avstand marginTop={5}>
-          <BodyShort style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</BodyShort>
+          <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
         </Avstand>
         <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
         <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris_amblyopi')}</Avstand>
