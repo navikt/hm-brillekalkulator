@@ -1,28 +1,27 @@
-import { RequestHandler, rest, setupWorker } from 'msw'
+import { RequestHandler, http, HttpResponse } from "msw";
 import { apiUrl } from '../http'
 import { BeregnSatsRequest, KalkulatorResultatResponse } from '../types'
 import { beregnSats } from './beregnSats'
+import { setupWorker } from "msw/browser";
 
 const handlers: RequestHandler[] = [
-  rest.post<BeregnSatsRequest, {}, KalkulatorResultatResponse>(
+  http.post< {}, BeregnSatsRequest, KalkulatorResultatResponse>(
     apiUrl('/kalkulator/beregningsgrunnlag'),
-    (req, res, ctx) => {
-      return res(
-        ctx.delay(700),
-        ctx.json(
+    async ({request}) => {
+      const req = await request.json()
+      return HttpResponse.json(
           beregnSats(
             {
-              høyreSfære: req.body.høyreSfære,
-              høyreSylinder: req.body.høyreSylinder,
-              høyreAdd: req.body.høyreAdd,
-              venstreSfære: req.body.venstreSfære,
-              venstreSylinder: req.body.venstreSylinder,
-              venstreAdd: req.body.venstreAdd,
+              høyreSfære: req.høyreSfære,
+              høyreSylinder: req.høyreSylinder,
+              høyreAdd: req.høyreAdd,
+              venstreSfære: req.venstreSfære,
+              venstreSylinder: req.venstreSylinder,
+              venstreAdd: req.venstreAdd,
             },
-            req.body.alder,
-            req.body.strabisme
+            req.alder,
+            req.strabisme
           )
-        )
       )
     }
   ),
