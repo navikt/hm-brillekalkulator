@@ -11,7 +11,7 @@ const satser: Record<SatsTypeBrillestøtte, BeregnSatsResponse> = {
   [SatsTypeBrillestøtte.SATS_1]: {
     sats: SatsTypeBrillestøtte.SATS_1,
     satsBeskrivelse:
-      'Briller med sfærisk styrke på minst ett glass ≥ 1,00D ≤ 4,00D og/eller cylinderstyrke ≥ 1,00D ≤ 4,00D',
+      'Briller med sfærisk styrke på minst ett glass ≥ 1,00D ≤ 4,00D og/eller cylinderstyrke ≥ 1,00D ≤ 4,00D ',
     satsBeløp: 750,
   },
   [SatsTypeBrillestøtte.SATS_2]: {
