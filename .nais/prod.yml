@@ -8,7 +8,6 @@ metadata:
   namespace: teamdigihot
 spec:
   image: {{image}}
-  team: teamdigihot
   port: 5000
   ingresses:
     - https://www.nav.no/hjelpemidler/brillekalkulator
