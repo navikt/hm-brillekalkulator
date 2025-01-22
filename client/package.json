@@ -38,15 +38,15 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/styled-components": "^5.1.26",
-    "@vitejs/plugin-react": "^2.0.1",
+    "@vitejs/plugin-react": "^4.3.4",
     "cypress": "^13.1.0",
     "msw": "^2.5.2",
     "mustache": "^4.2.0",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "typescript": "^4.7.4",
-    "vite": "^3.2.11",
-    "vitest": "^0.22.1"
+    "vite": "^6.0.11",
+    "vitest": "^3.0.3"
   },
   "msw": {
     "workerDirectory": "public"
