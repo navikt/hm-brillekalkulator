@@ -12,12 +12,12 @@ spec:
   ingresses:
     - https://brille.intern.dev.nav.no/hjelpemidler/brillekalkulator
   liveness:
-    path: /hjelpemidler/brillekalkulator/internal/isalive
+    path: isalive
   readiness:
-    path: /hjelpemidler/brillekalkulator/internal/isready
+    path: isready
   prometheus:
-    enabled: true
-    path: /hjelpemidler/brillekalkulator/internal/metrics
+    enabled: false
+    path: metrics
   replicas:
     max: 1
     min: 1
@@ -31,13 +31,13 @@ spec:
   env:
     - name: BRILLE_API_BASE_URL
       value: 'http://hm-brille-api.teamdigihot.svc.cluster.local'
-    - name: PORT
-      value: '5000'
     - name: GIT_COMMIT
       value: {{commit}}
   accessPolicy:
     outbound:
       rules:
         - application: hm-brille-api
+        - application: nav-dekoratoren
+          namespace: personbruker
       external:
         - host: dekoratoren.ekstern.dev.nav.no
