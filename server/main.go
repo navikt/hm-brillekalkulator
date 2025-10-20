@@ -13,8 +13,19 @@ func main() {
 		BasePath: "/hjelpemidler/brillekalkulator/",
 		RootDir:  "dist",
 		DecoratorOpts: &decorator.Options{
-			Context: "privatperson",
-			Chatbot: new(bool),
+			Context:  "privatperson",
+			Chatbot:  new(bool),
+			Language: "nb",
+			AvailableLanguages: []decorator.AvailableLanguage{
+				{
+					Locale:      "nb",
+					HandleInApp: true,
+				},
+				{
+					Locale:      "nn",
+					HandleInApp: true,
+				},
+			},
 		},
 		Proxy: proxy.Map{
 			"/api/": &proxy.Options{

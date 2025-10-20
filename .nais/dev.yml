@@ -12,12 +12,12 @@ spec:
   ingresses:
     - https://brille.intern.dev.nav.no/hjelpemidler/brillekalkulator
   liveness:
-    path: isalive
+    path: /isalive
   readiness:
-    path: isready
+    path: /isready
   prometheus:
     enabled: false
-    path: metrics
+    path: /metrics
   replicas:
     max: 1
     min: 1

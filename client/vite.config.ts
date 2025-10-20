@@ -9,11 +9,35 @@ const htmlPlugin = ({ development }: { development?: boolean }): Plugin => ({
     if (development) {
       const decorator = await fetchDecoratorHtml({
         env: 'dev',
-        context: 'privatperson',
-        chatbot: false,
+        params: {
+          context: 'privatperson',
+          chatbot: false,
+          language: 'nb',
+          availableLanguages: [
+            {
+              locale: 'nb',
+              handleInApp: true,
+            },
+            {
+              locale: 'nn',
+              handleInApp: true,
+            },
+          ],
+        }
       })
+      const {
+        DECORATOR_HEAD_ASSETS: HeadAssets,
+        DECORATOR_HEADER: Header,
+        DECORATOR_FOOTER: Footer,
+        DECORATOR_SCRIPTS: Scripts,
+      } = decorator
       return {
-        html: render(html, decorator),
+        html: render(html.replace(/\{\{\./g, '{{{').replace(/\}\}/g, '}}}'), {
+          HeadAssets,
+          Header,
+          Footer,
+          Scripts,
+        }),
         tags: [
           {
             tag: 'script',
