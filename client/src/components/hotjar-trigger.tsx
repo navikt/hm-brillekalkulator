@@ -17,9 +17,9 @@ export const HotjarTrigger = ({ timeout, trigger }: HotjarTriggerProps) => {
       window.hj =
         window.hj ||
         function () {
-          ;(window.hj.q = window.hj.q || []).push(arguments)
+          ; (window.hj.q = window.hj.q || []).push(arguments)
         }
-      if (window.appSettings.MILJO === 'prod-gcp') {
+      if (window.appSettings.NAIS_CLUSTER_NAME === 'prod-gcp') {
         window.hj('trigger', trigger)
       }
     }, timeout)

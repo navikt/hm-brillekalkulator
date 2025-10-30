@@ -1,7 +1,11 @@
-version: "3"
 services:
   hm-brillekalkulator:
     build: .
     image: "hm-brillekalkulator"
     ports:
-      - "5000:5000"
+      - "9000:5000"
+    environment:
+      NAIS_CLUSTER_NAME: 'dev-gcp'
+      BIND_ADDRESS: ':5000'
+      BRILLE_API_BASE_URL: 'http://localhost:4040'
+      USE_MSW: 'true'
