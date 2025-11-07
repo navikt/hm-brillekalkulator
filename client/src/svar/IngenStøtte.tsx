@@ -1,7 +1,6 @@
-import { Heading } from '@navikt/ds-react'
+import { Heading, HGrid } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
 import React from 'react'
-import styled from 'styled-components'
 import { InformationSquareFillIcon, XMarkOctagonFillIcon } from '@navikt/aksel-icons'
 
 export function IngenStøtte() {
@@ -9,8 +8,8 @@ export function IngenStøtte() {
 
   return (
     <>
-      <FailureTop>
-        <XMarkOctagonFillIcon aria-label="advarsel" title="advarsel"  fontSize="1.5rem" color="#F68282" />
+      <HGrid gap="0 space-12" marginBlock="space-12" columns="auto 1fr" align="center">
+        <XMarkOctagonFillIcon aria-label="advarsel" title="advarsel" fontSize="1.5rem" color="#F68282" />
         <Heading level="2" size="medium">
           {t('kalkulator.vilkårsvurdering_ikke_ok')}
         </Heading>
@@ -18,15 +17,7 @@ export function IngenStøtte() {
           <InformationSquareFillIcon aria-label="informasjon" title="informasjon" fontSize="1.5rem" color="#236B7D" />
           <div style={{ width: '80%', paddingLeft: '0.5rem' }}>{t('kalkulator.informasjon_om_veiledende_svar')}</div>
         </div>
-      </FailureTop>
+      </HGrid>
     </>
   )
 }
-
-const FailureTop = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  column-gap: var(--a-spacing-3);
-  margin-bottom: var(--a-spacing-3);
-`

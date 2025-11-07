@@ -1,6 +1,5 @@
-import { Alert, BodyShort, GuidePanel, Heading } from "@navikt/ds-react";
+import { Alert, BodyShort, Box, GuidePanel, Heading } from "@navikt/ds-react";
 import { useTranslation } from 'react-i18next'
-import { Banner } from '../components/Banner'
 import { ScrollToTop } from '../components/ScrollToTop'
 import { KalkulatorForm } from './KalkulatorForm'
 import { Avstand } from '../components/Avstand'
@@ -11,11 +10,11 @@ export function Kalkulator() {
   return (
     <>
       <header>
-        <Banner>
+        <Box.New background="neutral-soft" padding="4" style={{ textAlign: 'center' }}>
           <Heading level="1" size="large">
             {t('kalkulator.overskrift')}
           </Heading>
-        </Banner>
+        </Box.New>
       </header>
       <main>
         <ScrollToTop />

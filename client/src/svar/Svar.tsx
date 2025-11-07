@@ -1,6 +1,5 @@
-import { Button, Heading, Loader } from '@navikt/ds-react'
+import { Box, Button, Heading, HGrid, Loader } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
-import { Banner } from '../components/Banner'
 import { HotjarTrigger } from '../components/hotjar-trigger'
 import { ScrollToTop } from '../components/ScrollToTop'
 import { Avstand } from '../components/Avstand'
@@ -33,11 +32,11 @@ export function Svar() {
   return (
     <>
       <header>
-        <Banner>
+        <Box.New background="neutral-soft" padding="4" style={{ textAlign: 'center' }}>
           <Heading level="1" size="large">
             {t('kalkulator.overskrift')}
           </Heading>
-        </Banner>
+        </Box.New>
       </header>
       <main>
         <ScrollToTop />
@@ -58,7 +57,7 @@ export function Svar() {
           ) : (
             <>
               {vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok ? (
-                <SuccessTop>
+                <HGrid gap="0 space-12" marginBlock="space-12" columns="auto 1fr" align="center">
                   <CheckmarkCircleFillIcon aria-label="suksess" title="suksess" fontSize="1.5rem" color="green" />
                   <Heading level="2" size="large">
                     {t('kalkulator.vilkårsvurdering_ok')}
@@ -69,7 +68,7 @@ export function Svar() {
                       {t('kalkulator.informasjon_om_veiledende_svar')}
                     </div>
                   </div>
-                </SuccessTop>
+                </HGrid>
               ) : (
                 <>
                   <IngenStøtte />
@@ -101,12 +100,4 @@ export function Svar() {
 
 const Centered = styled.div`
   text-align: center;
-`
-
-const SuccessTop = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  column-gap: var(--a-spacing-3);
-  margin-bottom: var(--a-spacing-3);
 `

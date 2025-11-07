@@ -1,22 +1,21 @@
-import {Controller, useFormContext} from 'react-hook-form'
+import { Controller, useFormContext } from 'react-hook-form'
 import styled from 'styled-components'
 
-import {Detail, Heading, Select} from '@navikt/ds-react'
-import {Brilleseddel} from "../types";
-import {capitalize} from "../common/stringFormatting";
-import {MAX_ADD, MAX_SFÆRE, MAX_SYLINDER} from "./config";
-import {FormatertStyrke} from "./FormatertStyrke";
-import {enhet} from "../enhet";
-import {useTranslation} from "react-i18next";
+import { Heading, Select } from '@navikt/ds-react'
+import { Brilleseddel } from "../types";
+import { MAX_ADD, MAX_SFÆRE, MAX_SYLINDER } from "./config";
+import { FormatertStyrke } from "./FormatertStyrke";
+import { enhet } from "../enhet";
+import { useTranslation } from "react-i18next";
 
 
 export function Øye(props: { type: 'venstre' | 'høyre' }) {
-    const {type} = props
+    const { type } = props
     const {
         control,
-        formState: {errors},
+        formState: { errors },
     } = useFormContext<{ brilleseddel: Brilleseddel }>()
-    const {t} = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <Grid>
@@ -33,7 +32,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                 rules={{
                     required: 'Mangler verdi',
                 }}
-                render={({field}) => (
+                render={({ field }) => (
                     <Select
                         label={'Sfære (SPH)'}
                         size="small"
@@ -42,7 +41,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                     >
                         {range(-MAX_SFÆRE, 0).map((it) => (
                             <option key={it} value={it}>
-                                <FormatertStyrke verdi={it}/>
+                                <FormatertStyrke verdi={it} />
                             </option>
                         ))}
                         <option value="" disabled>
@@ -50,7 +49,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                         </option>
                         {range(0.25, MAX_SFÆRE).map((it) => (
                             <option key={it} value={it}>
-                                <FormatertStyrke verdi={it}/>
+                                <FormatertStyrke verdi={it} />
                             </option>
                         ))}
                     </Select>
@@ -63,7 +62,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                 rules={{
                     required: 'Mangler verdi',
                 }}
-                render={({field}) => (
+                render={({ field }) => (
                     <Select
                         label="Cylinder (CYL)"
                         size="small"
@@ -72,7 +71,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                     >
                         {range(-MAX_SYLINDER, 0).map((it) => (
                             <option key={it} value={it}>
-                                <FormatertStyrke verdi={it}/>
+                                <FormatertStyrke verdi={it} />
                             </option>
                         ))}
                         <option value="" disabled>
@@ -85,7 +84,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
             <Controller
                 name={`brilleseddel.${type}Add`}
                 control={control}
-                render={({field}) => (
+                render={({ field }) => (
                     <Select
                         label={'Addisjon (ADD)'}
                         size="small"
@@ -97,7 +96,7 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                         </option>
                         {range(0.75, MAX_ADD).map((it) => (
                             <option key={it} value={it}>
-                                <FormatertStyrke verdi={it}/>
+                                <FormatertStyrke verdi={it} />
                             </option>
                         ))}
                     </Select>
@@ -115,9 +114,9 @@ const ØyeEtikett = styled.div`
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 100px 130px 140px 130px;
-  gap: var(--a-spacing-5);
-  padding-top: var(--a-spacing-3);
-  padding-bottom: var(--a-spacing-3);
+  gap: var(--ax-space-20);
+  padding-top: var(--ax-space-12);
+  padding-bottom: var(--ax-space-12);
   align-items: start;
   @media ${enhet.mobil} {
     grid-template-columns: 100%;

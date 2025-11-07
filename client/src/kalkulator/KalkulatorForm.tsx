@@ -136,6 +136,6 @@ export function KalkulatorForm() {
 
 const Grid = styled.div`
   display: grid;
-  gap: var(--a-spacing-5);
-  margin-bottom: var(--a-spacing-5);
+  gap: var(--ax-space-20);
+  margin-bottom: var(--ax-space-20);
 `

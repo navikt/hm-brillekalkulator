@@ -11,9 +11,9 @@
     "prettier": "prettier -w src"
   },
   "dependencies": {
-    "@navikt/ds-css": "^4.12.1",
-    "@navikt/ds-react": "^4.12.1",
-    "@navikt/aksel-icons": "^5.5.0",
+    "@navikt/ds-css": "^7.33.0",
+    "@navikt/ds-react": "^7.33.0",
+    "@navikt/aksel-icons": "^7.33.0",
     "@navikt/nav-dekoratoren-moduler": "^3.4.0",
     "@navikt/hm-react-components": "1.0.3",
     "amplitude-js": "^8.20.0",
