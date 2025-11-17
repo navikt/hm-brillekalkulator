@@ -9,10 +9,10 @@ export function FormatertStyrke(props: FormatertStyrkeProps) {
     return null
   }
 
-  if (verdi > 10.0) {
+  if (Number(verdi) > 10.0) {
     return <>Over 10</>
   }
-  if (verdi < -10.0) {
+  if (Number(verdi) < -10.0) {
     return <>Over -10</>
   }
   return <>{desimaltallMedFortegn(verdi)}</>
