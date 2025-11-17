@@ -2,11 +2,9 @@ import { BodyLong, Button, Heading, Radio, RadioGroup, Select } from '@navikt/ds
 import React, { useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
 import { Avstand } from '../components/Avstand'
 import { logKalkulatorVist } from '../utils/amplitude'
 import { useNavigate } from 'react-router-dom'
-
 import { range, Øye } from './Øye'
 import { Brilleseddel } from '../types'
 import { useApplicationContext } from '../state/ApplicationContext'
@@ -57,33 +55,31 @@ export function KalkulatorForm() {
         <Heading level="2" size="medium" spacing>
           {t('kalkulator.om_barnet')}
         </Heading>
-        <Grid>
-          <div>
-            <Controller
-              control={methods.control}
-              name="alder"
-              rules={{ required: 'Velg en verdi' }}
-              render={({ field }) => (
-                <Select
-                  label={t('kalkulator.ledetekst_vilkår_alder')}
-                  size="small"
-                  error={errors.alder?.message}
-                  {...field}
-                  style={{ width: '8rem' }}
-                >
-                  {range(0, 17, 1).map((it) => (
-                    <option key={it} value={it}>
-                      {it}
-                    </option>
-                  ))}
-                  <option value="" disabled>
-                    Velg alder
+        <div>
+          <Controller
+            control={methods.control}
+            name="alder"
+            rules={{ required: 'Velg en verdi' }}
+            render={({ field }) => (
+              <Select
+                label={t('kalkulator.ledetekst_vilkår_alder')}
+                size="small"
+                error={errors.alder?.message}
+                {...field}
+                style={{ width: '8rem' }}
+              >
+                {range(0, 17, 1).map((it) => (
+                  <option key={it} value={it}>
+                    {it}
                   </option>
-                </Select>
-              )}
-            />
-          </div>
-        </Grid>
+                ))}
+                <option value="" disabled>
+                  Velg alder
+                </option>
+              </Select>
+            )}
+          />
+        </div>
 
         <Avstand marginTop={12}>
           <Heading level="2" size="medium" spacing>
@@ -133,9 +129,3 @@ export function KalkulatorForm() {
     </FormProvider>
   )
 }
-
-const Grid = styled.div`
-  display: grid;
-  gap: var(--ax-space-20);
-  margin-bottom: var(--ax-space-20);
-`

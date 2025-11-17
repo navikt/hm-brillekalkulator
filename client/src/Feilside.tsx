@@ -1,6 +1,5 @@
-import { Accordion, BodyShort, Heading } from '@navikt/ds-react'
+import { Accordion, BodyShort, Heading, HStack } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
-import styled from 'styled-components'
 import { AppLink } from './components/AppLink'
 import { Avstand } from './components/Avstand'
 import { Pipe } from './components/Pipe'
@@ -19,9 +18,11 @@ export function Feilside(props: FeilsideProps) {
     <main>
       <Avstand paddingLeft={3} paddingRight={3}>
         <Heading level="1" size="large" spacing>
-          {t(overskrift[status] || 'Teknisk feil')}
-          <Pipe />
-          <Feilkode>{t('feilside.feilkode', { status })}</Feilkode>
+          <HStack align="center">
+            {t(overskrift[status] || 'Teknisk feil')}
+            <Pipe />
+            <BodyShort size="large">{t('feilside.feilkode', { status })}</BodyShort>
+          </HStack>
         </Heading>
         {{
           401: <IkkeLoggetInn />,
@@ -33,7 +34,7 @@ export function Feilside(props: FeilsideProps) {
           <Accordion.Item>
             <Accordion.Header>Informasjon til utviklere</Accordion.Header>
             <Accordion.Content>
-              <Code>{utviklerinformasjon}</Code>
+              <pre style={{ whiteSpace: 'pre-wrap', fontSize: '75%' }}>{utviklerinformasjon}</pre>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
@@ -82,12 +83,3 @@ const overskrift: Record<number, string> = {
   401: 'Ikke logget inn',
   404: 'Fant ikke siden',
 }
-
-const Feilkode = styled.small`
-  font-weight: normal;
-`
-
-const Code = styled.pre`
-  white-space: pre-wrap;
-  font-size: 75%;
-`

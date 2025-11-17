@@ -5,7 +5,6 @@ import { ScrollToTop } from '../components/ScrollToTop'
 import { Avstand } from '../components/Avstand'
 import React, { useEffect } from 'react'
 import { logVilkårsvurderingVist } from '../utils/amplitude'
-import styled from 'styled-components'
 import { useVilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
 import { useNavigate } from 'react-router-dom'
 import { CheckmarkCircleFillIcon, InformationSquareFillIcon } from '@navikt/aksel-icons'
@@ -51,9 +50,9 @@ export function Svar() {
         </Button>
         <Avstand marginTop={10} marginBottom={5}>
           {vilkårsvurdering.loading ? (
-            <Centered>
+            <div style={{ textAlign: 'center' }}>
               <Loader size="xlarge" />
-            </Centered>
+            </div>
           ) : (
             <>
               {vilkårsvurdering.vurderingAmblyopi?.ok || vilkårsvurdering.vurderingBrillestøtte?.ok ? (
@@ -97,7 +96,3 @@ export function Svar() {
     </>
   )
 }
-
-const Centered = styled.div`
-  text-align: center;
-`

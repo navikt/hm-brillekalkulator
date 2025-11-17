@@ -1,11 +1,8 @@
 import { Controller, useFormContext } from 'react-hook-form'
-import styled from 'styled-components'
-
-import { Heading, Select } from '@navikt/ds-react'
+import { Heading, HGrid, Select } from '@navikt/ds-react'
 import { Brilleseddel } from "../types";
 import { MAX_ADD, MAX_SFÆRE, MAX_SYLINDER } from "./config";
 import { FormatertStyrke } from "./FormatertStyrke";
-import { enhet } from "../enhet";
 import { useTranslation } from "react-i18next";
 
 
@@ -18,14 +15,14 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
     const { t } = useTranslation()
 
     return (
-        <Grid>
-            <ØyeEtikett>
+        <HGrid columns={{ xs: '1fr', sm: '100px 130px 140px 130px' }} gap="5" align="start" paddingBlock="3">
+            <div style={{ alignSelf: 'center' }}>
                 <Heading level="3" size="small">
                     {// Unngår å bruke t(`kalkulator.${type}_øye`), slik at testene kan fange opp at disse er i bruk...
                         type === 'høyre' ? t(`kalkulator.høyre_øye`) : t(`kalkulator.venstre_øye`)
                     }
                 </Heading>
-            </ØyeEtikett>
+            </div>
             <Controller
                 name={`brilleseddel.${type}Sfære`}
                 control={control}
@@ -102,26 +99,9 @@ export function Øye(props: { type: 'venstre' | 'høyre' }) {
                     </Select>
                 )}
             />
-        </Grid>
+        </HGrid>
     )
 }
-
-
-const ØyeEtikett = styled.div`
-  justify-items: auto;
-  align-self: center;
-`
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 100px 130px 140px 130px;
-  gap: var(--ax-space-20);
-  padding-top: var(--ax-space-12);
-  padding-bottom: var(--ax-space-12);
-  align-items: start;
-  @media ${enhet.mobil} {
-    grid-template-columns: 100%;
-  }
-`
 
 export function range(start: number, stop: number, step = 0.25): number[] {
     const valg = []
