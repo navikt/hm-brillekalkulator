@@ -35,7 +35,7 @@
     "@types/mustache": "^4.2.1",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.0.1",
+    "@vitejs/plugin-react": "^4.7.0",
     "cypress": "^13.1.0",
     "msw": "^2.5.2",
     "mustache": "^4.2.0",
