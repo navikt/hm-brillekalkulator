@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 
 	"github.com/navikt/hotbff"
@@ -33,8 +34,9 @@ func main() {
 				StripPrefix: false,
 			},
 		},
-		IDP:     "",
+		IDP:     nil,
 		EnvKeys: []string{},
 	}
-	hotbff.Start(opts)
+	mux := http.NewServeMux()
+	hotbff.Start(mux, opts)
 }
