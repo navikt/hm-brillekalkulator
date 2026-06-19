@@ -8,3 +8,8 @@ onlyBuiltDependencies:
 
 minimumReleaseAgeExclude:
   - '@navikt/*'
+
+allowBuilds:
+  cypress: true
+  esbuild: true
+  msw: true
