@@ -1,9 +1,8 @@
-import { Alert, BodyShort, Box, GuidePanel, Heading } from "@navikt/ds-react";
+import { Box, GuidePanel, Heading, VStack } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
 import { ScrollToTop } from '../components/ScrollToTop'
 import { KalkulatorForm } from './KalkulatorForm'
-import { Avstand } from '../components/Avstand'
-import React from "react";
+import React from 'react'
 
 export function Kalkulator() {
   const { t } = useTranslation()
@@ -16,23 +15,11 @@ export function Kalkulator() {
           </Heading>
         </Box.New>
       </header>
-      <main>
+      <VStack as="main" gap="8" paddingBlock="4 0">
         <ScrollToTop />
-        {/* <Avstand marginBottom={5} marginTop={5}>
-                    <Endringsvarsel
-                        tittel={t('info.satsendring.tittel')}
-                        tekst={t('info.satsendring.tekst')}
-                        lenketekst={t('info.satsendring.lenketekst')}
-                        lenke="https://www.nav.no/briller-til-barn"
-                    />
-                </Avstand> */}
-        <Avstand marginBottom={10} marginTop={5}>
-          <GuidePanel>
-            {t('kalkulator.informasjon_om_kalkulator')}
-          </GuidePanel>
-        </Avstand>
+        <GuidePanel>{t('kalkulator.informasjon_om_kalkulator')}</GuidePanel>
         <KalkulatorForm />
-      </main>
+      </VStack>
     </>
   )
 }

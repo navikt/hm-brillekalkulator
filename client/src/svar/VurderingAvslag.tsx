@@ -1,6 +1,5 @@
 import { Heading, Link, Box, HGrid } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
-import { Avstand } from '../components/Avstand'
 import React from 'react'
 import { digihot_customevents, logCustomEvent } from '../utils/amplitude'
 import { Vilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
@@ -23,7 +22,7 @@ export function VurderingAvslag(props: { type: 'brillestøtte' | 'amblyopi'; vur
                 <div key={index}>{tekst}</div>
               ))}
             </HGrid>
-            <Avstand marginTop={5}>
+            <Box marginBlock="5 0">
               <Link
                 href={
                   props.type === 'brillestøtte' ? 'https://www.nav.no/briller-til-barn' : 'https://www.nav.no/amblyopi'
@@ -35,7 +34,7 @@ export function VurderingAvslag(props: { type: 'brillestøtte' | 'amblyopi'; vur
               >
                 {t('kalkulator.knapp_mer_informasjon')}
               </Link>
-            </Avstand>
+            </Box>
           </div>
         </HGrid>
       </Box.New>
