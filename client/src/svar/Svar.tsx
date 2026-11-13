@@ -1,8 +1,7 @@
-import { Box, Button, Heading, HGrid, Loader } from '@navikt/ds-react'
+import { Box, Button, Heading, HGrid, Loader, VStack } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
 import { HotjarTrigger } from '../components/hotjar-trigger'
 import { ScrollToTop } from '../components/ScrollToTop'
-import { Avstand } from '../components/Avstand'
 import React, { useEffect } from 'react'
 import { logVilkårsvurderingVist } from '../utils/amplitude'
 import { useVilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
@@ -48,7 +47,7 @@ export function Svar() {
         >
           Tilbake
         </Button>
-        <Avstand marginTop={10} marginBottom={5}>
+        <Box marginBlock="10 5">
           {vilkårsvurdering.loading ? (
             <div style={{ textAlign: 'center' }}>
               <Loader size="xlarge" />
@@ -62,7 +61,12 @@ export function Svar() {
                     {t('kalkulator.vilkårsvurdering_ok')}
                   </Heading>
                   <div style={{ gridColumnStart: 2, display: 'flex', justifyContent: 'flex-start', padding: '1rem 0' }}>
-                    <InformationSquareFillIcon aria-label="informasjon" title="informasjon" fontSize="1.5rem" color="#236B7D" />
+                    <InformationSquareFillIcon
+                      aria-label="informasjon"
+                      title="informasjon"
+                      fontSize="1.5rem"
+                      color="#236B7D"
+                    />
                     <div style={{ width: '80%', paddingLeft: '0.5rem' }}>
                       {t('kalkulator.informasjon_om_veiledende_svar')}
                     </div>
@@ -72,26 +76,24 @@ export function Svar() {
                 <>
                   <IngenStøtte />
                   {vilkårsvurdering.vurderingAmblyopi && vilkårsvurdering.vurderingBrillestøtte && (
-                    <>
+                    <VStack gap="5">
                       <VurderingAvslag type="amblyopi" vurdering={vilkårsvurdering.vurderingAmblyopi} />
-                      <Avstand marginTop={5} />
                       <VurderingAvslag type="brillestøtte" vurdering={vilkårsvurdering.vurderingBrillestøtte} />
-                    </>
+                    </VStack>
                   )}
                 </>
               )}
-              {vilkårsvurdering.vurderingAmblyopi?.ok && (
-                <Vurdering type="amblyopi" vurdering={vilkårsvurdering.vurderingAmblyopi} />
-              )}
-              {vilkårsvurdering.vurderingAmblyopi?.ok && vilkårsvurdering.vurderingBrillestøtte?.ok && (
-                <Avstand marginTop={5} />
-              )}
-              {vilkårsvurdering.vurderingBrillestøtte?.ok && (
-                <Vurdering type="brillestøtte" vurdering={vilkårsvurdering.vurderingBrillestøtte} />
-              )}
+              <VStack gap="5">
+                {vilkårsvurdering.vurderingAmblyopi?.ok && (
+                  <Vurdering type="amblyopi" vurdering={vilkårsvurdering.vurderingAmblyopi} />
+                )}
+                {vilkårsvurdering.vurderingBrillestøtte?.ok && (
+                  <Vurdering type="brillestøtte" vurdering={vilkårsvurdering.vurderingBrillestøtte} />
+                )}
+              </VStack>
             </>
           )}
-        </Avstand>
+        </Box>
       </main>
     </>
   )

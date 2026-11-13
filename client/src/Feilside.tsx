@@ -1,7 +1,6 @@
-import { Accordion, BodyShort, Heading, HStack } from '@navikt/ds-react'
+import { Accordion, BodyShort, Box, Heading, HStack } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
 import { AppLink } from './components/AppLink'
-import { Avstand } from './components/Avstand'
 import { Pipe } from './components/Pipe'
 import { hentUtviklerinformasjon } from './error'
 
@@ -16,7 +15,7 @@ export function Feilside(props: FeilsideProps) {
   const utviklerinformasjon = hentUtviklerinformasjon(error)
   return (
     <main>
-      <Avstand paddingLeft={3} paddingRight={3}>
+      <Box paddingInline="3">
         <Heading level="1" size="large" spacing>
           <HStack align="center">
             {t(overskrift[status] || 'Teknisk feil')}
@@ -28,7 +27,7 @@ export function Feilside(props: FeilsideProps) {
           401: <IkkeLoggetInn />,
           404: <IkkeFunnet />,
         }[status] || <TekniskFeil />}
-      </Avstand>
+      </Box>
       {utviklerinformasjon && (
         <Accordion>
           <Accordion.Item>

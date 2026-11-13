@@ -1,6 +1,5 @@
 import React, { ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Avstand } from '../components/Avstand'
 import {
   BeregnSatsRequest,
   KalkulatorResultatResponse,
@@ -10,7 +9,7 @@ import {
 } from '../types'
 import { usePost } from '../usePost'
 import { useApplicationContext } from '../state/ApplicationContext'
-import { BodyShort } from '@navikt/ds-react'
+import { Box } from '@navikt/ds-react'
 
 export interface Vilkårsvurdering {
   overskrift: string
@@ -91,12 +90,12 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   if (ok) {
     tekst.push(
       <>
-        <Avstand marginTop={5}>
+        <Box marginBlock="5 0">
           <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
-        </Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_brillestøtte')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.vilkår_vedtak_forklaring')}</Avstand>
+        </Box>
+        <Box marginBlock="4 0">{t('kalkulator.hvordan_få_støtte_brillestøtte')}</Box>
+        <Box marginBlock="4 0">{t('kalkulator.informasjon_om_brillepris')}</Box>
+        <Box marginBlock="4 0">{t('kalkulator.vilkår_vedtak_forklaring')}</Box>
       </>
     )
   }
@@ -104,21 +103,21 @@ export function useVilkårsvurdering(): KalkulatorResultat {
   if (okAmblyopi && beregning.amblyopistøtte.sats === SatsTypeAmblyopi.INDIVIDUELT) {
     tekstAmblyopi.push(
       <>
-        <Avstand marginTop={5}>
+        <Box marginBlock="5 0">
           <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
-        </Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.hva_dekkes_individuell_sats')}</Avstand>
+        </Box>
+        <Box marginBlock="4 0">{t('kalkulator.hvordan_få_støtte_amblyopi')}</Box>
+        <Box marginBlock="4 0">{t('kalkulator.hva_dekkes_individuell_sats')}</Box>
       </>
     )
   } else if (okAmblyopi && beregning.amblyopistøtte.sats !== SatsTypeAmblyopi.INDIVIDUELT) {
     tekstAmblyopi.push(
       <>
-        <Avstand marginTop={5}>
+        <Box marginBlock="5 0">
           <h3 style={{ fontWeight: 700 }}>{t('kalkulator.hvordan_få_støtte')}</h3>
-        </Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.hvordan_få_støtte_amblyopi')}</Avstand>
-        <Avstand marginTop={4}>{t('kalkulator.informasjon_om_brillepris_amblyopi')}</Avstand>
+        </Box>
+        <Box marginBlock="4 0">{t('kalkulator.hvordan_få_støtte_amblyopi')}</Box>
+        <Box marginBlock="4 0">{t('kalkulator.informasjon_om_brillepris_amblyopi')}</Box>
       </>
     )
   }

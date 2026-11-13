@@ -1,6 +1,5 @@
-import { BodyShort, Box, Heading, HelpText, HGrid, Link } from "@navikt/ds-react";
+import { BodyShort, Box, Heading, HelpText, HGrid, Link } from '@navikt/ds-react'
 import { useTranslation } from 'react-i18next'
-import { Avstand } from '../components/Avstand'
 import React from 'react'
 import { digihot_customevents, logCustomEvent } from '../utils/amplitude'
 import { Vilkårsvurdering } from '../kalkulator/useVilkårsvurdering'
@@ -32,7 +31,7 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
                 <div key={index}>{tekst}</div>
               ))}
             </HGrid>
-            <Avstand marginTop={5}>
+            <Box marginBlock="5 0">
               <Link
                 href={
                   props.type === 'brillestøtte' ? 'https://www.nav.no/briller-til-barn' : 'https://www.nav.no/amblyopi'
@@ -44,7 +43,7 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
               >
                 {t('kalkulator.knapp_mer_informasjon')}
               </Link>
-            </Avstand>
+            </Box>
           </div>
           <div>
             {props.vurdering.satsType === SatsTypeAmblyopi.INDIVIDUELT ? (
@@ -52,14 +51,12 @@ export function Vurdering(props: { type: 'brillestøtte' | 'amblyopi'; vurdering
                 <Heading level="2" size="xsmall" style={{ alignContent: 'center' }}>
                   (Individuell sats)
                 </Heading>
-                <HelpText title="Hva betyr dette?">
-                  {t('kalkulator.om_individuell_sats')}
-                </HelpText>
+                <HelpText title="Hva betyr dette?">{t('kalkulator.om_individuell_sats')}</HelpText>
               </div>
             ) : (
               <Heading level="2" spacing size="small">
-                {props.vurdering.satsbeløp} kr ({props.vurdering.ok && props.vurdering.satsType.replace('SATS_', 'sats ')}
-                )
+                {props.vurdering.satsbeløp} kr (
+                {props.vurdering.ok && props.vurdering.satsType.replace('SATS_', 'sats ')})
               </Heading>
             )}
           </div>

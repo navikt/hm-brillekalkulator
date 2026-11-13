@@ -1,8 +1,7 @@
-import { BodyLong, Button, Heading, Radio, RadioGroup, Select } from '@navikt/ds-react'
+import { BodyLong, Button, Heading, Radio, RadioGroup, Select, VStack } from '@navikt/ds-react'
 import React, { useState } from 'react'
 import { Controller, FormProvider, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { Avstand } from '../components/Avstand'
 import { logKalkulatorVist } from '../utils/amplitude'
 import { useNavigate } from 'react-router-dom'
 import { range, Øye } from './Øye'
@@ -43,7 +42,9 @@ export function KalkulatorForm() {
 
   return (
     <FormProvider {...methods}>
-      <form
+      <VStack
+        as="form"
+        gap="12"
         onSubmit={methods.handleSubmit((data) => {
           setAppState((prev) => ({
             ...prev,
@@ -52,10 +53,10 @@ export function KalkulatorForm() {
           navigate('/svar')
         })}
       >
-        <Heading level="2" size="medium" spacing>
-          {t('kalkulator.om_barnet')}
-        </Heading>
-        <div>
+        <VStack gap="6">
+          <Heading level="2" size="medium">
+            {t('kalkulator.om_barnet')}
+          </Heading>
           <Controller
             control={methods.control}
             name="alder"
@@ -79,53 +80,51 @@ export function KalkulatorForm() {
               </Select>
             )}
           />
-        </div>
+        </VStack>
 
-        <Avstand marginTop={12}>
-          <Heading level="2" size="medium" spacing>
+        <VStack gap="6">
+          <Heading level="2" size="medium">
             {t('kalkulator.brillestyrke')}
           </Heading>
-        </Avstand>
-        <Avstand>
           <BodyLong>{t('kalkulator.informasjon_om_brilleseddel')}</BodyLong>
-          <Øye type="høyre" />
-          <hr />
-          <Øye type="venstre" />
-        </Avstand>
-
-        <Avstand marginTop={12}>
           <div>
-            <Controller
-              control={methods.control}
-              name="strabisme"
-              rules={{ required: 'Velg en verdi' }}
-              render={({ field }) => (
-                <RadioGroup
-                  legend={t('kalkulator.ledetekst_vilkår_strabisme')}
-                  description={t('kalkulator.vilkår_strabisme_forklaring')}
-                  {...field}
-                  error={errors.strabisme?.message}
-                >
-                  <Radio value="ja">{t('felles.ja')}</Radio>
-                  <Radio value="nei">{t('felles.nei')}</Radio>
-                  <Radio value="usikker">{t('felles.vet_ikke')}</Radio>
-                </RadioGroup>
-              )}
-            />
+            <Øye type="høyre" />
+            <hr />
+            <Øye type="venstre" />
           </div>
-        </Avstand>
-        <Avstand marginTop={6}>
-          <Button
-            type="submit"
-            variant="primary"
-            size="medium"
-            disabled={venterPåVilkårsvurdering}
-            loading={venterPåVilkårsvurdering}
-          >
-            Beregn
-          </Button>
-        </Avstand>
-      </form>
+        </VStack>
+
+        <VStack gap="6">
+          <Controller
+            control={methods.control}
+            name="strabisme"
+            rules={{ required: 'Velg en verdi' }}
+            render={({ field }) => (
+              <RadioGroup
+                legend={t('kalkulator.ledetekst_vilkår_strabisme')}
+                description={t('kalkulator.vilkår_strabisme_forklaring')}
+                {...field}
+                error={errors.strabisme?.message}
+              >
+                <Radio value="ja">{t('felles.ja')}</Radio>
+                <Radio value="nei">{t('felles.nei')}</Radio>
+                <Radio value="usikker">{t('felles.vet_ikke')}</Radio>
+              </RadioGroup>
+            )}
+          />
+          <div>
+            <Button
+              type="submit"
+              variant="primary"
+              size="medium"
+              disabled={venterPåVilkårsvurdering}
+              loading={venterPåVilkårsvurdering}
+            >
+              Beregn
+            </Button>
+          </div>
+        </VStack>
+      </VStack>
     </FormProvider>
   )
 }
